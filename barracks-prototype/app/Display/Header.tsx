@@ -2,12 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, Users, UserCheck, Database } from "lucide-react"
+import { LayoutDashboard, Users, UserCheck, Moon, Sun } from "lucide-react"
 
 export default function Header() {
   const pathname = usePathname()
-  
+  const { theme, setTheme } = useTheme()
+
   // Don't show header on login page
   if (pathname === "/" || pathname === "/Display/LoginPage") {
     return null
@@ -22,36 +24,39 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
-        <div className="flex items-center space-x-4">
-          <Link href="/Display/LandingPage" className="flex items-center space-x-2">
-            <Database className="h-6 w-6" />
-            <span className="font-bold">Barracks</span>
-          </Link>
-          
-          <nav className="flex items-center space-x-2 lg:space-x-4">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
-              return (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant={isActive ? "default" : "ghost"}
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Button>
-                </Link>
-              )
-            })}
-          </nav>
-        </div>
-        
+        <nav className="flex items-center space-x-2 lg:space-x-4">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
+            return (
+              <Link key={item.href} href={item.href}>
+                <Button
+                  variant={isActive ? "default" : "ghost"}
+                  size="sm"
+                  className="gap-2"
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                </Button>
+              </Link>
+            )
+          })}
+        </nav>
+
         <div className="flex flex-1 items-center justify-end space-x-2">
           <span className="px-3 py-1 text-sm text-muted-foreground">
             Records Management
           </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="h-9 w-9"
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
         </div>
       </div>
     </header>
