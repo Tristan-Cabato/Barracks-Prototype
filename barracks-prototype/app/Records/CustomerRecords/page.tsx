@@ -246,11 +246,13 @@ export default function CustomerRecordsPage() {
 
   return (
     <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background dark:bg-[#08090a]">
-      {/* Grid background (dark mode only) */}
+      {/* Grid background */}
       <div
-        className="pointer-events-none absolute inset-0 hidden opacity-[0.03] dark:block"
+        className="pointer-events-none absolute inset-0 opacity-[0.04] dark:opacity-[0.03]"
         style={{
           backgroundImage: `
+            linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px),
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
           `,
@@ -273,13 +275,10 @@ export default function CustomerRecordsPage() {
           style={{ animation: "fade-in 0.5s ease-out both" }}
         >
           <div>
-            <div className="mb-2 flex items-center gap-2">
+            <div className="mb-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-500/20 dark:border-amber-400/20 bg-amber-500/5 dark:bg-amber-400/5">
                 <Users className="h-4 w-4 text-amber-500 dark:text-amber-400" />
               </div>
-              <span className="font-mono text-[11px] font-medium tracking-[0.25em] uppercase text-muted-foreground">
-                Module
-              </span>
             </div>
             <h1
               className="text-4xl font-extrabold tracking-tight text-foreground dark:text-white md:text-6xl lg:text-7xl"
@@ -385,10 +384,10 @@ export default function CustomerRecordsPage() {
             value={sortBy}
             onValueChange={(value) => setSortBy(value as typeof sortBy)}
           >
-            <SelectTrigger className="w-full sm:w-[200px]">
+            <SelectTrigger className="w-full sm:w-[200px] border-border/40 dark:border-zinc-800/50">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border-border/40 dark:border-zinc-800/50">
               <SelectItem value="name-asc">Name A–Z</SelectItem>
               <SelectItem value="name-desc">Name Z–A</SelectItem>
               <SelectItem value="recent">Recently Added</SelectItem>
@@ -402,7 +401,7 @@ export default function CustomerRecordsPage() {
           style={{ animation: "fade-in 0.5s 0.2s ease-out both" }}
         >
           {/* Panel header */}
-          <div className="flex items-center justify-between border-b bg-muted/30 px-5 py-3">
+          <div className="flex items-center justify-between border-b border-border/30 dark:border-zinc-800/40 bg-muted/30 px-5 py-3">
             <div className="flex items-center gap-3">
               <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-muted-foreground">
                 All Customers
@@ -422,11 +421,11 @@ export default function CustomerRecordsPage() {
               </p>
             </div>
           ) : (
-            <div className="divide-y">
+            <div className="divide-y divide-border/40 dark:divide-zinc-800/50">
               {filteredCustomers.map((customer, index) => (
                 <div
                   key={customer.id}
-                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:bg-accent/50"
+                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:bg-muted/40 dark:hover:bg-zinc-800/30"
                   style={{
                     animation: `fade-in 0.4s ${0.05 + index * 0.04}s ease-out both`,
                   }}
@@ -498,8 +497,8 @@ export default function CustomerRecordsPage() {
             <>
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md border border-primary/20 bg-primary/5">
-                    <Users className="h-4 w-4 text-primary" />
+                  <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-500/20 dark:border-amber-400/20 bg-amber-500/5 dark:bg-amber-400/5">
+                    <Users className="h-4 w-4 text-amber-500 dark:text-amber-400" />
                   </div>
                   {viewedCustomer.name}
                 </DialogTitle>
@@ -524,11 +523,12 @@ export default function CustomerRecordsPage() {
                   Edit
                 </Button>
                 <Button
-                  variant="destructive"
+                  variant="outline"
                   onClick={() => {
                     setViewingCustomerId(null);
                     deleteCustomer(viewedCustomer.id);
                   }}
+                  className="border-red-500/20 dark:border-red-400/20 bg-red-500/5 dark:bg-red-400/5 text-red-600 dark:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-400/10 hover:text-red-700 dark:hover:text-red-300 hover:border-red-500/30 dark:hover:border-red-400/30"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
                   Delete
@@ -594,7 +594,9 @@ export default function CustomerRecordsPage() {
             <Button variant="outline" onClick={cancelEdit}>
               Cancel
             </Button>
-            <Button type="submit" form="edit-form">
+            <Button type="submit" form="edit-form"
+              className="border border-amber-500/20 dark:border-amber-400/20 bg-amber-500/5 dark:bg-amber-400/5 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 dark:hover:bg-amber-400/10 hover:text-amber-700 dark:hover:text-amber-300"
+            >
               Save Changes
             </Button>
           </DialogFooter>
@@ -638,7 +640,7 @@ function DetailRow({
   mono?: boolean;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-accent/50">
+    <div className="flex items-start gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-muted/40 dark:hover:bg-zinc-800/30">
       <span className="mt-0.5">{icon}</span>
       <div className="min-w-0 flex-1">
         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">

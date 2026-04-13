@@ -38,11 +38,13 @@ export default function LandingPage({
 }: LandingPageProps) {
   return (
     <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background dark:bg-[#08090a]">
-      {/* Grid background (dark mode only) */}
+      {/* Grid background */}
       <div
-        className="pointer-events-none absolute inset-0 hidden opacity-[0.03] dark:block"
+        className="pointer-events-none absolute inset-0 opacity-[0.04] dark:opacity-[0.03]"
         style={{
           backgroundImage: `
+            linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px),
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
           `,
@@ -164,7 +166,7 @@ const accentMap = {
   emerald: {
     text: "text-emerald-600 dark:text-emerald-400",
     bgSoft: "bg-emerald-500/5 dark:bg-emerald-400/5",
-    border: "border-emerald-500/20 dark:border-emerald-400/20",
+    border: "border-amber-500/20 dark:border-emerald-400/20",
     borderHover: "hover:border-emerald-500/40 dark:hover:border-emerald-400/40",
     titleHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
     arrowHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
