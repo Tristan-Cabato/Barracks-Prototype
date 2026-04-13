@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import seedCustomers from "@/app/data/customers.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,9 +13,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Eye, Pencil, Trash2, Mail, Phone, Calendar, Hash, Users } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Eye,
+  Pencil,
+  Trash2,
+  Mail,
+  Phone,
+  Calendar,
+  Hash,
+  Users,
+  X,
+} from "lucide-react";
 
 type Customer = {
   id: string;
@@ -95,12 +105,11 @@ export default function CustomerRecordsPage() {
   const [formError, setFormError] = useState("");
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
-  }, [customers]);
-
   const persistCustomers = (updatedCustomers: Customer[]) => {
     setCustomers(updatedCustomers);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCustomers));
+    }
   };
 
   const filteredCustomers = useMemo(() => {
@@ -236,239 +245,279 @@ export default function CustomerRecordsPage() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-6 max-w-7xl">
-      {/* Header with Gradient Accent */}
-      <div className="relative overflow-hidden mb-6">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 dark:from-primary/3 dark:to-primary/3" />
-        <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 px-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Users className="h-6 w-6 text-primary" />
-              </div>
-              <h1 className="text-3xl font-bold tracking-tight">Customer Records</h1>
-            </div>
-            <p className="text-muted-foreground">
-              Manage customer data with search, sorting, and quick actions.
-            </p>
-          </div>
-          <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Customer
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle className="text-xl">Create New Customer</DialogTitle>
-                <DialogDescription>
-                  Fill in the customer details below.
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleSubmit} id="create-form">
-                <div className="space-y-4 py-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Name</label>
-                    <Input
-                      type="text"
-                      value={formData.name}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, name: event.target.value }))
-                      }
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email</label>
-                    <Input
-                      type="email"
-                      value={formData.email}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, email: event.target.value }))
-                      }
-                      placeholder="name@email.com"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Contact Number</label>
-                    <Input
-                      type="tel"
-                      value={formData.contactNumber}
-                      onChange={(event) =>
-                        setFormData((previous) => ({
-                          ...previous,
-                          contactNumber: event.target.value,
-                        }))
-                      }
-                      placeholder="+63 917 555 0111"
-                    />
-                  </div>
-                </div>
-                {formError && <p className="text-sm text-destructive">{formError}</p>}
-              </form>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" form="create-form">
-                  Add Customer
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
+    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-[#08090a]">
+      {/* Grid background */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-      {/* Search & Sort Bar */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="text"
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Search customers by name"
-            className="pl-9 shadow-sm focus:shadow-md transition-shadow"
-          />
-        </div>
-        <Select
-          value={sortBy}
-          onValueChange={(value) => setSortBy(value as typeof sortBy)}
+      {/* Scanline effect */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)`,
+        }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-14">
+        {/* ─── Header ─── */}
+        <header
+          className="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between"
+          style={{ animation: "fade-in 0.5s ease-out both" }}
         >
-          <SelectTrigger className="w-full sm:w-[200px] shadow-sm">
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="name-asc">Name A-Z</SelectItem>
-            <SelectItem value="name-desc">Name Z-A</SelectItem>
-            <SelectItem value="recent">Recently Added</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Records List with Animated Rows */}
-      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
-        <div className="p-4 border-b bg-muted/30">
-          <div className="flex items-center justify-between">
-            <h2 className="font-semibold flex items-center gap-2">
-              All Customers
-              <Badge variant="secondary" className="animate-fade-in">
-                {filteredCustomers.length} record{filteredCustomers.length !== 1 ? "s" : ""}
-              </Badge>
-            </h2>
-          </div>
-        </div>
-
-        {filteredCustomers.length === 0 ? (
-          <div className="p-12 text-center">
-            <p className="text-muted-foreground">
-              {searchQuery ? "No customers match your search." : "No customers yet. Add one to get started!"}
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-400/20 bg-amber-400/5">
+                <Users className="h-4 w-4 text-amber-400" />
+              </div>
+              <span className="font-mono text-[11px] font-medium tracking-[0.25em] uppercase text-zinc-500">
+                Module
+              </span>
+            </div>
+            <h1
+              className="text-4xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl"
+              style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
+            >
+              Customers
+            </h1>
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-zinc-500">
+              Browse, search, and manage all customer records.
             </p>
           </div>
-        ) : (
-          <div className="divide-y">
-            {filteredCustomers.map((customer, index) => (
-              <div
-                key={customer.id}
-                className="flex items-center justify-between p-4 hover:bg-accent/50 transition-all duration-200 group cursor-default"
-                style={{ animation: `fade-in-left 0.3s ease-out ${index * 0.05}s backwards` }}
-              >
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium group-hover:text-primary transition-colors truncate">
-                    {customer.name}
-                  </p>
-                  <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1 truncate">
-                      <Mail className="h-3 w-3 flex-shrink-0" />
-                      {customer.email}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Phone className="h-3 w-3 flex-shrink-0" />
-                      {customer.contactNumber}
-                    </span>
+
+          {/* Add Customer Button */}
+          <div className="md:pt-2">
+            <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  className="h-10 gap-2 border border-amber-400/20 bg-amber-400/5 text-amber-400 transition-all duration-300 hover:bg-amber-400/10 hover:text-amber-300"
+                  style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="text-sm font-semibold tracking-wide">Add Customer</span>
+                </Button>
+              </DialogTrigger>
+
+              {/* ─── Create Dialog ─── */}
+              <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+                <DialogHeader>
+                  <DialogTitle className="text-xl text-white">Add Customer</DialogTitle>
+                  <DialogDescription className="text-zinc-500">
+                    Enter the details for the new customer record.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit} id="create-form">
+                  <div className="space-y-4 py-4">
+                    <Field label="Name" icon={Users}>
+                      <Input
+                        type="text"
+                        value={formData.name}
+                        onChange={(event) =>
+                          setFormData((previous) => ({ ...previous, name: event.target.value }))
+                        }
+                        placeholder="John Doe"
+                        className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
+                      />
+                    </Field>
+                    <Field label="Email" icon={Mail}>
+                      <Input
+                        type="email"
+                        value={formData.email}
+                        onChange={(event) =>
+                          setFormData((previous) => ({ ...previous, email: event.target.value }))
+                        }
+                        placeholder="name@email.com"
+                        className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
+                      />
+                    </Field>
+                    <Field label="Contact Number" icon={Phone}>
+                      <Input
+                        type="tel"
+                        value={formData.contactNumber}
+                        onChange={(event) =>
+                          setFormData((previous) => ({
+                            ...previous,
+                            contactNumber: event.target.value,
+                          }))
+                        }
+                        placeholder="+63 917 555 0111"
+                        className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
+                      />
+                    </Field>
+                  </div>
+                  {formError && (
+                    <p className="text-sm text-red-400">{formError}</p>
+                  )}
+                </form>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setCreateDialogOpen(false)}
+                    className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    form="create-form"
+                    className="border border-amber-400/20 bg-amber-400/10 text-amber-400 hover:bg-amber-400/20 hover:text-amber-300"
+                  >
+                    Add Customer
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </header>
+
+        {/* ─── Search & Sort Bar ─── */}
+        <div
+          className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+          style={{ animation: "fade-in 0.5s 0.1s ease-out both" }}
+        >
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-600" />
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search customers by name"
+              className="border-zinc-800 bg-zinc-900/40 pl-9 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/30 focus:ring-amber-400/10"
+            />
+          </div>
+          <select
+            value={sortBy}
+            onChange={(event) => setSortBy(event.target.value as typeof sortBy)}
+            className="h-10 rounded-md border border-zinc-800 bg-zinc-900/40 px-3 text-sm text-zinc-300 outline-none focus:border-amber-400/30"
+            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+          >
+            <option value="name-asc">Name A–Z</option>
+            <option value="name-desc">Name Z–A</option>
+            <option value="recent">Recently Added</option>
+          </select>
+        </div>
+
+        {/* ─── Records Panel ─── */}
+        <div
+          className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/20"
+          style={{ animation: "fade-in 0.5s 0.2s ease-out both" }}
+        >
+          {/* Panel header */}
+          <div className="flex items-center justify-between border-b border-zinc-800/60 px-5 py-3">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-zinc-500">
+                All Customers
+              </span>
+              <span className="rounded bg-zinc-800/80 px-2 py-0.5 font-mono text-[10px] font-bold text-zinc-400">
+                {filteredCustomers.length}
+              </span>
+            </div>
+          </div>
+
+          {filteredCustomers.length === 0 ? (
+            <div className="px-5 py-16 text-center">
+              <p className="text-sm text-zinc-600">
+                {searchQuery
+                  ? "No customers match your search."
+                  : "No customers yet. Add one to get started."}
+              </p>
+            </div>
+          ) : (
+            <div className="divide-y divide-zinc-800/50">
+              {filteredCustomers.map((customer, index) => (
+                <div
+                  key={customer.id}
+                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:bg-zinc-800/30"
+                  style={{
+                    animation: `fade-in 0.4s ${0.05 + index * 0.04}s ease-out both`,
+                  }}
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-zinc-200 transition-colors group-hover:text-amber-400">
+                      {customer.name}
+                    </p>
+                    <div className="mt-1 flex items-center gap-4 text-xs text-zinc-500">
+                      <span className="flex items-center gap-1 truncate">
+                        <Mail className="h-3 w-3 flex-shrink-0 text-zinc-600" />
+                        {customer.email}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Phone className="h-3 w-3 flex-shrink-0 text-zinc-600" />
+                        {customer.contactNumber}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="ml-4 flex items-center gap-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <IconBtn
+                      icon={<Eye className="h-3.5 w-3.5" />}
+                      label="View"
+                      onClick={() => setViewingCustomerId(customer.id)}
+                      hoverColor="text-sky-400 hover:bg-sky-400/10"
+                    />
+                    <IconBtn
+                      icon={<Pencil className="h-3.5 w-3.5" />}
+                      label="Edit"
+                      onClick={() => openEditDialog(customer)}
+                      hoverColor="text-amber-400 hover:bg-amber-400/10"
+                    />
+                    <IconBtn
+                      icon={<Trash2 className="h-3.5 w-3.5" />}
+                      label="Delete"
+                      onClick={() => deleteCustomer(customer.id)}
+                      hoverColor="text-red-400 hover:bg-red-400/10"
+                    />
                   </div>
                 </div>
-                <div className="flex items-center gap-1 ml-4 opacity-70 group-hover:opacity-100 transition-opacity">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => setViewingCustomerId(customer.id)}
-                    title="View Details"
-                    className="h-8 w-8 hover:bg-primary/10 hover:text-primary"
-                  >
-                    <Eye className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => openEditDialog(customer)}
-                    title="Edit"
-                    className="h-8 w-8 hover:bg-amber-500/10 hover:text-amber-500"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => deleteCustomer(customer.id)}
-                    title="Delete"
-                    className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ─── Footer Note ─── */}
+        <div
+          className="mt-8 rounded-lg border border-zinc-800/60 bg-zinc-900/30 px-5 py-4"
+          style={{ animation: "fade-in 0.5s 0.5s ease-out both" }}
+        >
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 inline-flex h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+            <div>
+              <p className="text-sm font-semibold text-zinc-300">Placeholder Data</p>
+              <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+                Records are seeded from a local JSON file and stored in your browser&apos;s
+                localStorage. Once a backend is connected, data will sync across sessions and
+                support real-time persistence.
+              </p>
+            </div>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* View Customer Dialog */}
+      {/* ─── View Customer Dialog ─── */}
       <Dialog open={!!viewingCustomerId} onOpenChange={(open) => !open && setViewingCustomerId(null)}>
-        <DialogContent>
+        <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
           {viewedCustomer && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-xl flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-primary/10">
-                    <Users className="h-5 w-5 text-primary" />
+                <DialogTitle className="flex items-center gap-2 text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-md border border-sky-400/20 bg-sky-400/5">
+                    <Users className="h-4 w-4 text-sky-400" />
                   </div>
                   {viewedCustomer.name}
                 </DialogTitle>
-                <DialogDescription>Customer Details</DialogDescription>
+                <DialogDescription className="text-zinc-500">Customer Details</DialogDescription>
               </DialogHeader>
-              <div className="space-y-4 py-4">
-                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
-                  <Mail className="h-4 w-4 text-muted-foreground mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium">Email</p>
-                    <p className="text-sm text-muted-foreground">{viewedCustomer.email}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
-                  <Phone className="h-4 w-4 text-muted-foreground mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium">Contact Number</p>
-                    <p className="text-sm text-muted-foreground">{viewedCustomer.contactNumber}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
-                  <Hash className="h-4 w-4 text-muted-foreground mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium">Record ID</p>
-                    <p className="text-sm text-muted-foreground font-mono bg-muted px-2 py-0.5 rounded inline-block">{viewedCustomer.id}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
-                  <Calendar className="h-4 w-4 text-muted-foreground mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium">Created At</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(viewedCustomer.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
+              <div className="space-y-2 py-4">
+                <DetailRow icon={<Mail className="h-4 w-4 text-zinc-600" />} label="Email" value={viewedCustomer.email} />
+                <DetailRow icon={<Phone className="h-4 w-4 text-zinc-600" />} label="Contact" value={viewedCustomer.contactNumber} />
+                <DetailRow icon={<Hash className="h-4 w-4 text-zinc-600" />} label="Record ID" value={viewedCustomer.id} mono />
+                <DetailRow icon={<Calendar className="h-4 w-4 text-zinc-600" />} label="Created" value={new Date(viewedCustomer.createdAt).toLocaleString()} />
               </div>
               <DialogFooter>
                 <Button
@@ -477,19 +526,20 @@ export default function CustomerRecordsPage() {
                     setViewingCustomerId(null);
                     openEditDialog(viewedCustomer);
                   }}
-                  className="hover:bg-amber-500/10 hover:text-amber-500 hover:border-amber-500/30 transition-colors"
+                  className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-amber-400/30 hover:bg-amber-400/10 hover:text-amber-400"
                 >
-                  <Pencil className="h-4 w-4 mr-2" />
+                  <Pencil className="mr-2 h-4 w-4" />
                   Edit
                 </Button>
                 <Button
-                  variant="destructive"
+                  variant="outline"
                   onClick={() => {
                     setViewingCustomerId(null);
                     deleteCustomer(viewedCustomer.id);
                   }}
+                  className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-red-400/30 hover:bg-red-400/10 hover:text-red-400"
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
+                  <Trash2 className="mr-2 h-4 w-4" />
                   Delete
                 </Button>
               </DialogFooter>
@@ -498,34 +548,33 @@ export default function CustomerRecordsPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Edit Customer Dialog */}
+      {/* ─── Edit Customer Dialog ─── */}
       <Dialog
         open={!!editingCustomerId}
         onOpenChange={(open) => {
           if (!open) cancelEdit();
         }}
       >
-        <DialogContent>
+        <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
           <DialogHeader>
-            <DialogTitle className="text-xl">Edit Customer</DialogTitle>
-            <DialogDescription>
-              Update the customer details below.
+            <DialogTitle className="text-white">Edit Customer</DialogTitle>
+            <DialogDescription className="text-zinc-500">
+              Update the details for <span className="font-semibold text-zinc-300">{editingCustomer?.name}</span>.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit} id="edit-form">
             <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Name</label>
+              <Field label="Name" icon={Users}>
                 <Input
                   type="text"
                   value={formData.name}
                   onChange={(event) =>
                     setFormData((previous) => ({ ...previous, name: event.target.value }))
                   }
+                  className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                 />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Email</label>
+              </Field>
+              <Field label="Email" icon={Mail}>
                 <Input
                   type="email"
                   value={formData.email}
@@ -533,10 +582,10 @@ export default function CustomerRecordsPage() {
                     setFormData((previous) => ({ ...previous, email: event.target.value }))
                   }
                   placeholder="name@email.com"
+                  className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                 />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Contact Number</label>
+              </Field>
+              <Field label="Contact Number" icon={Phone}>
                 <Input
                   type="tel"
                   value={formData.contactNumber}
@@ -547,26 +596,102 @@ export default function CustomerRecordsPage() {
                     }))
                   }
                   placeholder="+63 917 555 0111"
+                  className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                 />
-              </div>
+              </Field>
             </div>
-            {formError && <p className="text-sm text-destructive">{formError}</p>}
+            {formError && <p className="text-sm text-red-400">{formError}</p>}
           </form>
           <DialogFooter>
-            <Button variant="outline" onClick={cancelEdit}>
+            <Button
+              variant="outline"
+              onClick={cancelEdit}
+              className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100"
+            >
               Cancel
             </Button>
-            <Button type="submit" form="edit-form">
+            <Button
+              type="submit"
+              form="edit-form"
+              className="border border-amber-400/20 bg-amber-400/10 text-amber-400 hover:bg-amber-400/20 hover:text-amber-300"
+            >
               Save Changes
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    </div>
+  );
+}
 
-      {/* Hardcoded Note */}
-      <div className="mt-6 p-4 rounded-lg bg-muted/50 text-muted-foreground text-sm border-l-2 border-muted-foreground/20">
-        <p>Note: These are hardcoded, I will replace them later with live data.</p>
+/* ─── Sub-components ─── */
+
+function Field({
+  label,
+  icon: Icon,
+  children,
+}: {
+  label: string;
+  icon: React.ElementType;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-2">
+      <label className="flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-zinc-500">
+        <Icon className="h-3.5 w-3.5 text-zinc-600" />
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function DetailRow({
+  icon,
+  label,
+  value,
+  mono,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
+  return (
+    <div className="flex items-start gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-zinc-800/30">
+      <span className="mt-0.5">{icon}</span>
+      <div className="min-w-0 flex-1">
+        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-600">
+          {label}
+        </p>
+        <p
+          className={`text-sm text-zinc-300 ${mono ? "font-mono break-all" : "truncate"}`}
+        >
+          {value}
+        </p>
       </div>
     </div>
+  );
+}
+
+function IconBtn({
+  icon,
+  label,
+  onClick,
+  hoverColor,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  onClick: () => void;
+  hoverColor: string;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      title={label}
+      className={`flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 transition-all duration-200 ${hoverColor}`}
+    >
+      {icon}
+    </button>
   );
 }
