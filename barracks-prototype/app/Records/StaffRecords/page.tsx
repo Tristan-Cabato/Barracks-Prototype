@@ -279,7 +279,7 @@ export default function StaffRecordsPage() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background dark:bg-[#08090a]">
+    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background">
       {/* Grid background */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.04] dark:opacity-[0.03]"
