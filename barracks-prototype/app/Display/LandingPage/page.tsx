@@ -119,7 +119,7 @@ export default function LandingPage({
       {/* Record Cards */}
       <div className="grid gap-6 md:grid-cols-2">
         <Link href={recordsData.href} className="group">
-          <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full border-l-4 border-l-primary">
+          <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
                 <Users className="h-5 w-5" />
@@ -143,7 +143,7 @@ export default function LandingPage({
         </Link>
 
         <Link href={inventoryData.href} className="group">
-          <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full border-l-4 border-l-emerald-500">
+          <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 group-hover:text-emerald-500 transition-colors">
                 <UserCheck className="h-5 w-5" />
