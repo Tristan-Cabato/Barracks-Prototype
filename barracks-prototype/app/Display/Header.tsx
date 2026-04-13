@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, Users, UserCheck, Moon, Sun } from "lucide-react"
+import { Users, UserCheck, Moon, Sun } from "lucide-react"
+import barracksLogo from "../../barrackslogo.png"
 
 export default function Header() {
   const pathname = usePathname()
@@ -21,36 +22,52 @@ export default function Header() {
     return null
   }
 
-  const navItems = [
-    { href: "/Display/LandingPage", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/Records/CustomerRecords", label: "Customers", icon: Users },
-    { href: "/Records/StaffRecords", label: "Staff", icon: UserCheck },
-  ]
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="flex h-14 items-center px-6">
         <nav className="flex items-center space-x-2 lg:space-x-4">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const isActive = pathname === item.href
-            return (
-              <Link key={item.href} href={item.href}>
-                <Button
-                  variant={isActive ? "default" : "ghost"}
-                  size="sm"
-                  className={`gap-2 transition-all duration-200 ${
-                    isActive
-                      ? "shadow-md"
-                      : "hover:-translate-y-0.5 hover:shadow-sm"
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </Button>
-              </Link>
-            )
-          })}
+          {/* Dashboard logo button */}
+          <Link href="/Display/LandingPage">
+            <Button
+              variant={pathname === "/Display/LandingPage" ? "default" : "ghost"}
+              size="sm"
+              className="h-8 w-8 p-0 transition-all duration-200"
+            >
+              <img
+                src={barracksLogo.src}
+                alt="Dashboard"
+                className="h-5 w-auto dark:invert"
+              />
+            </Button>
+          </Link>
+          <Link href="/Records/CustomerRecords">
+            <Button
+              variant={pathname === "/Records/CustomerRecords" ? "default" : "ghost"}
+              size="sm"
+              className={`gap-2 transition-all duration-200 ${
+                pathname === "/Records/CustomerRecords"
+                  ? "shadow-md"
+                  : "hover:-translate-y-0.5 hover:shadow-sm"
+              }`}
+            >
+              <Users className="h-4 w-4" />
+              Customers
+            </Button>
+          </Link>
+          <Link href="/Records/StaffRecords">
+            <Button
+              variant={pathname === "/Records/StaffRecords" ? "default" : "ghost"}
+              size="sm"
+              className={`gap-2 transition-all duration-200 ${
+                pathname === "/Records/StaffRecords"
+                  ? "shadow-md"
+                  : "hover:-translate-y-0.5 hover:shadow-sm"
+              }`}
+            >
+              <UserCheck className="h-4 w-4" />
+              Staff
+            </Button>
+          </Link>
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
