@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, UserCheck, TrendingUp, Clock } from "lucide-react"
+import { Users, UserCheck, ArrowUpRight, Zap, Shield, Activity } from "lucide-react"
 
 interface CardData {
   title: string
@@ -20,157 +19,226 @@ interface LandingPageProps {
 export default function LandingPage({
   recordsData = {
     title: "Customer Records",
-    totalLabel: "Total Records",
+    totalLabel: "TOTAL RECORDS",
     total: "1,247",
-    recentLabel: "Recent:",
-    recent: "#6767 - Customer Real",
-    updated: "Updated: Today, 2:15 PM",
+    recentLabel: "LATEST",
+    recent: "#6767 — Customer Real",
+    updated: "UPDATED 14:15",
     href: "/Records/CustomerRecords",
   },
   inventoryData = {
     title: "Staff Records",
-    totalLabel: "Total Staff:",
+    totalLabel: "TOTAL STAFF",
     total: "42",
-    recentLabel: "Recent:",
-    recent: "Daniel Cruz - Barber",
-    updated: "Updated: Today, 11:30 AM",
+    recentLabel: "LATEST",
+    recent: "Daniel Cruz — Barber",
+    updated: "UPDATED 11:30",
     href: "/Records/StaffRecords",
   },
 }: LandingPageProps) {
   return (
-    <div className="container mx-auto py-8 px-6 max-w-7xl">
-      {/* Welcome Section with Gradient */}
-      <div className="mb-8 relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary/10 via-accent to-primary/5 dark:from-primary/5 dark:via-accent dark:to-primary/10 p-8 border border-primary/10">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-        <div className="relative">
-          <h1 className="text-4xl font-bold tracking-tight mb-2 bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
-            Dashboard
-          </h1>
-          <p className="text-muted-foreground">
-            Welcome back! Here&apos;s an overview of your records management system.
-          </p>
+    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-[#08090a]">
+      {/* Grid background */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#f59e0b]/[0.04] blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[#10b981]/[0.03] blur-[120px]" />
+
+      {/* Scanline effect */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)`,
+        }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 py-10 lg:px-8 lg:py-14">
+        {/* ─── Header Zone ─── */}
+        <header
+          className="mb-12 flex flex-col gap-1 md:flex-row md:items-end md:justify-between"
+          style={{ animation: "fade-in 0.6s ease-out both" }}
+        >
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+              <span className="font-mono text-[11px] font-medium tracking-[0.25em] uppercase text-zinc-500">
+                System Online
+              </span>
+            </div>
+            <h1 className="text-5xl font-extrabold tracking-tight text-white md:text-7xl lg:text-8xl"
+                style={{ fontFamily: "var(--font-bricolage), sans-serif" }}>
+              Dashboard
+            </h1>
+            <p className="mt-3 max-w-md text-base leading-relaxed text-zinc-500">
+              Records management command center. Navigate to any module below.
+            </p>
+          </div>
+
+          {/* Status badge */}
+          <div className="mt-4 hidden items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 px-5 py-3 backdrop-blur-sm md:flex">
+            <Shield className="h-4 w-4 text-zinc-500" />
+            <div className="text-right">
+              <div className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-500">
+                Security Level
+              </div>
+              <div className="text-sm font-bold text-emerald-400">ACTIVE</div>
+            </div>
+          </div>
+        </header>
+
+        {/* ─── Stat Ticker ─── */}
+        <div
+          className="mb-10 grid grid-cols-2 gap-3 md:grid-cols-4"
+          style={{ animation: "fade-in 0.6s 0.15s ease-out both" }}
+        >
+          {[
+            { label: "Customers", value: recordsData.total, icon: Users, color: "text-amber-400", glow: "shadow-[0_0_12px_rgba(251,191,36,0.3)]" },
+            { label: "Staff", value: inventoryData.total, icon: UserCheck, color: "text-emerald-400", glow: "shadow-[0_0_12px_rgba(52,211,153,0.3)]" },
+            { label: "Latest Entry", value: recordsData.recent, icon: Activity, color: "text-sky-400", glow: "shadow-[0_0_12px_rgba(56,189,248,0.3)]" },
+            { label: "Sync", value: "NOW", icon: Zap, color: "text-violet-400", glow: "shadow-[0_0_12px_rgba(167,139,250,0.3)]" },
+          ].map((stat, i) => {
+            const Icon = stat.icon
+            return (
+              <div
+                key={stat.label}
+                className="group relative overflow-hidden rounded-lg border border-zinc-800/80 bg-zinc-900/40 px-4 py-5 backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/70"
+                style={{ animation: `fade-in 0.5s ${0.2 + i * 0.06}s ease-out both` }}
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-500">
+                    {stat.label}
+                  </span>
+                  <Icon className={`h-3.5 w-3.5 ${stat.color} opacity-60 transition-opacity group-hover:opacity-100`} />
+                </div>
+                <div className={`text-xl font-extrabold tracking-tight ${stat.color} ${stat.glow}`}>
+                  {stat.value}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* ─── Module Cards ─── */}
+        <div
+          className="grid gap-5 md:grid-cols-2"
+          style={{ animation: "fade-in 0.6s 0.4s ease-out both" }}
+        >
+          <ModuleCard
+            data={recordsData}
+            accent="amber"
+            index={0}
+          />
+          <ModuleCard
+            data={inventoryData}
+            accent="emerald"
+            index={1}
+          />
+        </div>
+
+        {/* ─── Footer Note ─── */}
+        <div
+          className="mt-10 flex items-center gap-3 text-xs text-zinc-600"
+          style={{ animation: "fade-in 0.5s 0.6s ease-out both" }}
+        >
+          <span className="inline-block h-px flex-1 bg-zinc-800/60" />
+          <span className="font-mono tracking-wider">HARDCODED — LIVE DATA PENDING</span>
+          <span className="inline-block h-px flex-1 bg-zinc-800/60" />
         </div>
       </div>
-
-      {/* Stat Cards with Staggered Animation */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200" style={{ animation: 'scale-in 0.3s ease-out' }}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Customers</CardTitle>
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Users className="h-4 w-4 text-primary" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{recordsData.total}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {recordsData.updated}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200" style={{ animation: 'scale-in 0.3s ease-out 0.05s backwards' }}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Staff</CardTitle>
-            <div className="p-2 rounded-lg bg-emerald-500/10">
-              <UserCheck className="h-4 w-4 text-emerald-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{inventoryData.total}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {inventoryData.updated}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200" style={{ animation: 'scale-in 0.3s ease-out 0.1s backwards' }}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Recent Activity</CardTitle>
-            <div className="p-2 rounded-lg bg-amber-500/10">
-              <TrendingUp className="h-4 w-4 text-amber-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-sm font-medium truncate">{recordsData.recent}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Latest customer added
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200" style={{ animation: 'scale-in 0.3s ease-out 0.15s backwards' }}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Quick Stats</CardTitle>
-            <div className="p-2 rounded-lg bg-purple-500/10">
-              <Clock className="h-4 w-4 text-purple-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-sm font-medium">System Online</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Last sync: Just now
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Record Cards */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <Link href={recordsData.href} className="group">
-          <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
-                <Users className="h-5 w-5" />
-                {recordsData.title}
-              </CardTitle>
-              <CardDescription>{recordsData.updated}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-primary/5">
-                  <span className="text-muted-foreground">{recordsData.totalLabel}</span>
-                  <span className="font-bold text-2xl text-primary">{recordsData.total}</span>
-                </div>
-                <div className="pt-3 border-t">
-                  <span className="text-sm text-muted-foreground">{recordsData.recentLabel}</span>{" "}
-                  <span className="text-sm font-medium">{recordsData.recent}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Link href={inventoryData.href} className="group">
-          <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 group-hover:text-emerald-500 transition-colors">
-                <UserCheck className="h-5 w-5" />
-                {inventoryData.title}
-              </CardTitle>
-              <CardDescription>{inventoryData.updated}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-emerald-500/10">
-                  <span className="text-muted-foreground">{inventoryData.totalLabel}</span>
-                  <span className="font-bold text-2xl text-emerald-500">{inventoryData.total}</span>
-                </div>
-                <div className="pt-3 border-t">
-                  <span className="text-sm text-muted-foreground">{inventoryData.recentLabel}</span>{" "}
-                  <span className="text-sm font-medium">{inventoryData.recent}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-      </div>
-
-      {/* Hardcoded Note */}
-      <div className="mt-6 p-4 rounded-lg bg-muted/50 text-muted-foreground text-sm border-l-2 border-muted-foreground/20">
-        <p>Note: These are hardcoded, I will replace them later with live data.</p>
-      </div>
     </div>
+  )
+}
+
+/* ─── Module Card Sub-component ─── */
+interface ModuleCardProps {
+  data: CardData
+  accent: "amber" | "emerald"
+  index: number
+}
+
+const accentMap = {
+  amber: {
+    text: "text-amber-400",
+    bg: "bg-amber-400",
+    bgSoft: "bg-amber-400/5",
+    border: "border-amber-400/20",
+    borderHover: "hover:border-amber-400/40",
+    glow: "shadow-[0_0_40px_rgba(251,191,36,0.06)]",
+    iconGlow: "shadow-[0_0_12px_rgba(251,191,36,0.4)]",
+  },
+  emerald: {
+    text: "text-emerald-400",
+    bg: "bg-emerald-400",
+    bgSoft: "bg-emerald-400/5",
+    border: "border-emerald-400/20",
+    borderHover: "hover:border-emerald-400/40",
+    glow: "shadow-[0_0_40px_rgba(52,211,153,0.06)]",
+    iconGlow: "shadow-[0_0_12px_rgba(52,211,153,0.4)]",
+  },
+}
+
+function ModuleCard({ data, accent, index }: ModuleCardProps) {
+  const a = accentMap[accent]
+  const Icon = accent === "amber" ? Users : UserCheck
+
+  return (
+    <Link href={data.href} className="group" style={{ animation: `fade-in 0.5s ${0.45 + index * 0.1}s ease-out both` }}>
+      <article
+        className={`relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/30 p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 ${a.border} ${a.borderHover} ${a.glow}`}
+      >
+        {/* Corner accent */}
+        <div className={`absolute -right-6 -top-6 h-24 w-24 rounded-full ${a.bg} opacity-[0.04] blur-xl transition-opacity duration-500 group-hover:opacity-[0.08]`} />
+
+        {/* Top row: icon + title + timestamp */}
+        <div className="mb-6 flex items-start justify-between">
+          <div className="flex items-center gap-3">
+            <div className={`flex h-11 w-11 items-center justify-center rounded-lg border ${a.border} ${a.bgSoft} transition-all duration-300 group-hover:scale-110 ${a.iconGlow}`}>
+              <Icon className={`h-5 w-5 ${a.text}`} />
+            </div>
+            <div>
+              <h2 className={`text-lg font-bold tracking-tight text-white transition-colors duration-300 group-hover:${a.text}`}>
+                {data.title}
+              </h2>
+              <p className="font-mono text-[11px] tracking-wider text-zinc-600">{data.updated}</p>
+            </div>
+          </div>
+          <ArrowUpRight className={`h-5 w-5 text-zinc-600 transition-all duration-300 group-hover:${a.text} group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
+        </div>
+
+        {/* Big number */}
+        <div className="mb-5 flex items-end gap-3">
+          <span className={`text-6xl font-black tracking-tighter text-white md:text-7xl`}>
+            {data.total}
+          </span>
+        </div>
+        <div className={`mb-5 inline-block rounded-md px-3 py-1 ${a.bgSoft}`}>
+          <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-zinc-500">
+            {data.totalLabel}
+          </span>
+        </div>
+
+        {/* Bottom row: latest entry */}
+        <div className="border-t border-zinc-800/60 pt-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-600">
+                {data.recentLabel}{" "}
+              </span>
+              <span className="text-sm font-semibold text-zinc-300">{data.recent}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </Link>
   )
 }
