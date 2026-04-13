@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Users, UserCheck, Moon, Sun } from "lucide-react"
-import barracksLogo from "../../barrackslogo.png"
+import barracksLogo from "../../barracks1200x700.png"
 
 export default function Header() {
   const pathname = usePathname()
@@ -24,21 +24,17 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
-      <div className="flex h-14 items-center px-6">
+      <div className="flex h-14 items-center px-8">
         <nav className="flex items-center space-x-2 lg:space-x-4">
           {/* Dashboard logo button */}
-          <Link href="/Display/LandingPage">
-            <Button
-              variant={pathname === "/Display/LandingPage" ? "default" : "ghost"}
-              size="sm"
-              className="h-8 w-8 p-0 transition-all duration-200"
-            >
-              <img
-                src={barracksLogo.src}
-                alt="Dashboard"
-                className="h-5 w-auto dark:invert"
-              />
-            </Button>
+          <Link href="/Display/LandingPage"
+            className="flex items-center rounded-md p-1 transition-opacity duration-200 hover:opacity-60"
+          >
+            <img
+              src={barracksLogo.src}
+              alt="Dashboard"
+              className="h-8 w-auto dark:invert"
+            />
           </Link>
           <Link href="/Records/CustomerRecords">
             <Button
