@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Eye, Pencil, Trash2, Mail, Phone, Calendar, Hash } from "lucide-react";
+import { Plus, Search, Eye, Pencil, Trash2, Mail, Phone, Calendar, Hash, Users } from "lucide-react";
 
 type Customer = {
   id: string;
@@ -237,79 +237,87 @@ export default function CustomerRecordsPage() {
 
   return (
     <div className="container mx-auto py-8 px-6 max-w-7xl">
-      {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Customer Records</h1>
-          <p className="text-muted-foreground mt-1">
-            Manage customer data with search, sorting, and quick actions.
-          </p>
-        </div>
-        <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={openCreateDialog}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Customer
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create New Customer</DialogTitle>
-              <DialogDescription>
-                Fill in the customer details below.
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} id="create-form">
-              <div className="space-y-4 py-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Name</label>
-                  <Input
-                    type="text"
-                    value={formData.name}
-                    onChange={(event) =>
-                      setFormData((previous) => ({ ...previous, name: event.target.value }))
-                    }
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Email</label>
-                  <Input
-                    type="email"
-                    value={formData.email}
-                    onChange={(event) =>
-                      setFormData((previous) => ({ ...previous, email: event.target.value }))
-                    }
-                    placeholder="name@email.com"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Contact Number</label>
-                  <Input
-                    type="tel"
-                    value={formData.contactNumber}
-                    onChange={(event) =>
-                      setFormData((previous) => ({
-                        ...previous,
-                        contactNumber: event.target.value,
-                      }))
-                    }
-                    placeholder="+63 917 555 0111"
-                  />
-                </div>
+      {/* Header with Gradient Accent */}
+      <div className="relative overflow-hidden mb-6">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 dark:from-primary/3 dark:to-primary/3" />
+        <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 px-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Users className="h-6 w-6 text-primary" />
               </div>
-              {formError && <p className="text-sm text-destructive">{formError}</p>}
-            </form>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button type="submit" form="create-form">
+              <h1 className="text-3xl font-bold tracking-tight">Customer Records</h1>
+            </div>
+            <p className="text-muted-foreground">
+              Manage customer data with search, sorting, and quick actions.
+            </p>
+          </div>
+          <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+                <Plus className="h-4 w-4 mr-2" />
                 Add Customer
               </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-xl">Create New Customer</DialogTitle>
+                <DialogDescription>
+                  Fill in the customer details below.
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleSubmit} id="create-form">
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Name</label>
+                    <Input
+                      type="text"
+                      value={formData.name}
+                      onChange={(event) =>
+                        setFormData((previous) => ({ ...previous, name: event.target.value }))
+                      }
+                      placeholder="John Doe"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Email</label>
+                    <Input
+                      type="email"
+                      value={formData.email}
+                      onChange={(event) =>
+                        setFormData((previous) => ({ ...previous, email: event.target.value }))
+                      }
+                      placeholder="name@email.com"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Contact Number</label>
+                    <Input
+                      type="tel"
+                      value={formData.contactNumber}
+                      onChange={(event) =>
+                        setFormData((previous) => ({
+                          ...previous,
+                          contactNumber: event.target.value,
+                        }))
+                      }
+                      placeholder="+63 917 555 0111"
+                    />
+                  </div>
+                </div>
+                {formError && <p className="text-sm text-destructive">{formError}</p>}
+              </form>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" form="create-form">
+                  Add Customer
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Search & Sort Bar */}
@@ -321,14 +329,14 @@ export default function CustomerRecordsPage() {
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
             placeholder="Search customers by name"
-            className="pl-9"
+            className="pl-9 shadow-sm focus:shadow-md transition-shadow"
           />
         </div>
         <Select
           value={sortBy}
           onValueChange={(value) => setSortBy(value as typeof sortBy)}
         >
-          <SelectTrigger className="w-full sm:w-[200px]">
+          <SelectTrigger className="w-full sm:w-[200px] shadow-sm">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
@@ -339,14 +347,16 @@ export default function CustomerRecordsPage() {
         </Select>
       </div>
 
-      {/* Records Table */}
-      <div className="rounded-lg border bg-card">
-        <div className="p-4 border-b">
+      {/* Records List with Animated Rows */}
+      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+        <div className="p-4 border-b bg-muted/30">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold">All Customers</h2>
-            <Badge variant="secondary">
-              {filteredCustomers.length} record{filteredCustomers.length !== 1 ? "s" : ""}
-            </Badge>
+            <h2 className="font-semibold flex items-center gap-2">
+              All Customers
+              <Badge variant="secondary" className="animate-fade-in">
+                {filteredCustomers.length} record{filteredCustomers.length !== 1 ? "s" : ""}
+              </Badge>
+            </h2>
           </div>
         </div>
 
@@ -358,13 +368,16 @@ export default function CustomerRecordsPage() {
           </div>
         ) : (
           <div className="divide-y">
-            {filteredCustomers.map((customer) => (
+            {filteredCustomers.map((customer, index) => (
               <div
                 key={customer.id}
-                className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
+                className="flex items-center justify-between p-4 hover:bg-accent/50 transition-all duration-200 group cursor-default"
+                style={{ animation: `fade-in-left 0.3s ease-out ${index * 0.05}s backwards` }}
               >
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium truncate">{customer.name}</p>
+                  <p className="font-medium group-hover:text-primary transition-colors truncate">
+                    {customer.name}
+                  </p>
                   <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1 truncate">
                       <Mail className="h-3 w-3 flex-shrink-0" />
@@ -376,12 +389,13 @@ export default function CustomerRecordsPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 ml-4">
+                <div className="flex items-center gap-1 ml-4 opacity-70 group-hover:opacity-100 transition-opacity">
                   <Button
                     size="icon"
                     variant="ghost"
                     onClick={() => setViewingCustomerId(customer.id)}
                     title="View Details"
+                    className="h-8 w-8 hover:bg-primary/10 hover:text-primary"
                   >
                     <Eye className="h-4 w-4" />
                   </Button>
@@ -390,6 +404,7 @@ export default function CustomerRecordsPage() {
                     variant="ghost"
                     onClick={() => openEditDialog(customer)}
                     title="Edit"
+                    className="h-8 w-8 hover:bg-amber-500/10 hover:text-amber-500"
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -398,8 +413,9 @@ export default function CustomerRecordsPage() {
                     variant="ghost"
                     onClick={() => deleteCustomer(customer.id)}
                     title="Delete"
+                    className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive"
                   >
-                    <Trash2 className="h-4 w-4 text-destructive" />
+                    <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
@@ -414,32 +430,37 @@ export default function CustomerRecordsPage() {
           {viewedCustomer && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-xl">{viewedCustomer.name}</DialogTitle>
+                <DialogTitle className="text-xl flex items-center gap-2">
+                  <div className="p-1.5 rounded-lg bg-primary/10">
+                    <Users className="h-5 w-5 text-primary" />
+                  </div>
+                  {viewedCustomer.name}
+                </DialogTitle>
                 <DialogDescription>Customer Details</DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                   <Mail className="h-4 w-4 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-sm font-medium">Email</p>
                     <p className="text-sm text-muted-foreground">{viewedCustomer.email}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                   <Phone className="h-4 w-4 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-sm font-medium">Contact Number</p>
                     <p className="text-sm text-muted-foreground">{viewedCustomer.contactNumber}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                   <Hash className="h-4 w-4 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-sm font-medium">Record ID</p>
-                    <p className="text-sm text-muted-foreground font-mono">{viewedCustomer.id}</p>
+                    <p className="text-sm text-muted-foreground font-mono bg-muted px-2 py-0.5 rounded inline-block">{viewedCustomer.id}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                   <Calendar className="h-4 w-4 text-muted-foreground mt-0.5" />
                   <div>
                     <p className="text-sm font-medium">Created At</p>
@@ -456,6 +477,7 @@ export default function CustomerRecordsPage() {
                     setViewingCustomerId(null);
                     openEditDialog(viewedCustomer);
                   }}
+                  className="hover:bg-amber-500/10 hover:text-amber-500 hover:border-amber-500/30 transition-colors"
                 >
                   <Pencil className="h-4 w-4 mr-2" />
                   Edit
@@ -485,7 +507,7 @@ export default function CustomerRecordsPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Customer</DialogTitle>
+            <DialogTitle className="text-xl">Edit Customer</DialogTitle>
             <DialogDescription>
               Update the customer details below.
             </DialogDescription>
@@ -542,7 +564,7 @@ export default function CustomerRecordsPage() {
       </Dialog>
 
       {/* Hardcoded Note */}
-      <div className="mt-6 p-4 rounded-lg bg-muted/50 text-muted-foreground text-sm">
+      <div className="mt-6 p-4 rounded-lg bg-muted/50 text-muted-foreground text-sm border-l-2 border-muted-foreground/20">
         <p>Note: These are hardcoded, I will replace them later with live data.</p>
       </div>
     </div>

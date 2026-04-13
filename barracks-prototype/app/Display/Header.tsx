@@ -28,7 +28,7 @@ export default function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="flex h-14 items-center px-6">
         <nav className="flex items-center space-x-2 lg:space-x-4">
           {navItems.map((item) => {
@@ -39,7 +39,11 @@ export default function Header() {
                 <Button
                   variant={isActive ? "default" : "ghost"}
                   size="sm"
-                  className="gap-2"
+                  className={`gap-2 transition-all duration-200 ${
+                    isActive
+                      ? "shadow-md"
+                      : "hover:-translate-y-0.5 hover:shadow-sm"
+                  }`}
                 >
                   <Icon className="h-4 w-4" />
                   {item.label}
@@ -58,7 +62,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-9 w-9"
+              className="h-9 w-9 hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200"
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
