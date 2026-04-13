@@ -274,7 +274,7 @@ export default function CustomerRecordsPage() {
         >
           <div>
             <div className="mb-2 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-400/20 bg-amber-400/5 dark:bg-amber-400/5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-500/20 dark:border-amber-400/20 bg-amber-500/5 dark:bg-amber-400/5">
                 <Users className="h-4 w-4 text-amber-500 dark:text-amber-400" />
               </div>
               <span className="font-mono text-[11px] font-medium tracking-[0.25em] uppercase text-muted-foreground">
@@ -297,7 +297,7 @@ export default function CustomerRecordsPage() {
             <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
               <DialogTrigger asChild>
                 <Button
-                  className="h-10 gap-2 border border-amber-400/20 bg-amber-400/5 text-amber-600 dark:text-amber-400 transition-all duration-300 hover:bg-amber-400/10 hover:text-amber-700 dark:hover:text-amber-300"
+                  className="h-10 gap-2 border border-amber-500/20 dark:border-amber-400/20 bg-amber-500/5 dark:bg-amber-400/5 text-amber-600 dark:text-amber-400 transition-all duration-300 hover:bg-amber-500/10 dark:hover:bg-amber-400/10 hover:text-amber-700 dark:hover:text-amber-300"
                   style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
                 >
                   <Plus className="h-4 w-4" />
@@ -398,7 +398,7 @@ export default function CustomerRecordsPage() {
 
         {/* ─── Records Panel ─── */}
         <div
-          className="overflow-hidden rounded-xl border bg-card shadow-sm"
+          className="overflow-hidden rounded-xl border border-border/40 dark:border-zinc-800/50 bg-card shadow-sm"
           style={{ animation: "fade-in 0.5s 0.2s ease-out both" }}
         >
           {/* Panel header */}
@@ -474,7 +474,7 @@ export default function CustomerRecordsPage() {
 
         {/* ─── Footer Note ─── */}
         <div
-          className="mt-8 rounded-lg border bg-muted/50 px-5 py-4"
+          className="mt-8 rounded-lg border border-border/30 bg-muted/30 px-5 py-4"
           style={{ animation: "fade-in 0.5s 0.5s ease-out both" }}
         >
           <div className="flex items-start gap-3">

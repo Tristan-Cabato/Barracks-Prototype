@@ -88,7 +88,7 @@ export default function LandingPage({
             return (
               <div
                 key={stat.label}
-                className="group relative overflow-hidden rounded-lg border bg-card/50 backdrop-blur-sm transition-all duration-300 hover:bg-card hover:shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:hover:bg-zinc-900/70"
+                className="group relative overflow-hidden rounded-lg border border-border/40 dark:border-zinc-800/80 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:bg-card hover:shadow-sm dark:bg-zinc-900/40 dark:hover:bg-zinc-900/70"
                 style={{ animation: `fade-in 0.5s ${0.2 + i * 0.06}s ease-out both` }}
               >
                 <div className="mb-2 flex items-center justify-between px-4 pt-4">
@@ -124,7 +124,7 @@ export default function LandingPage({
 
         {/* ─── Footer Note ─── */}
         <div
-          className="mt-10 rounded-lg border bg-muted/50 px-5 py-4"
+          className="mt-10 rounded-lg border border-border/30 bg-muted/30 px-5 py-4"
           style={{ animation: "fade-in 0.5s 0.6s ease-out both" }}
         >
           <div className="flex items-start gap-3">
@@ -159,6 +159,7 @@ const accentMap = {
     borderHover: "hover:border-amber-500/40 dark:hover:border-amber-400/40",
     titleHover: "group-hover:text-amber-600 dark:group-hover:text-amber-400",
     arrowHover: "group-hover:text-amber-600 dark:group-hover:text-amber-400",
+    iconBorder: "border-amber-500/20 dark:border-amber-400/20",
   },
   emerald: {
     text: "text-emerald-600 dark:text-emerald-400",
@@ -167,6 +168,7 @@ const accentMap = {
     borderHover: "hover:border-emerald-500/40 dark:hover:border-emerald-400/40",
     titleHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
     arrowHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
+    iconBorder: "border-emerald-500/20 dark:border-emerald-400/20",
   },
 }
 
@@ -177,12 +179,12 @@ function ModuleCard({ data, accent, index }: ModuleCardProps) {
   return (
     <Link href={data.href} className="group" style={{ animation: `fade-in 0.5s ${0.45 + index * 0.1}s ease-out both` }}>
       <article
-        className={`relative overflow-hidden rounded-xl border bg-card/50 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/30 ${a.border} ${a.borderHover}`}
+        className={`relative overflow-hidden rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800/50 dark:bg-zinc-900/30 ${a.border} ${a.borderHover}`}
       >
         {/* Top row: icon + title + timestamp */}
         <div className="mb-6 flex items-start justify-between px-6 pt-6">
           <div className="flex items-center gap-3">
-            <div className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-all duration-300 group-hover:scale-110 dark:${a.border} ${a.bgSoft}`}>
+            <div className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-all duration-300 group-hover:scale-110 ${a.iconBorder} ${a.bgSoft}`}>
               <Icon className={`h-5 w-5 ${a.text}`} />
             </div>
             <div>
@@ -208,7 +210,7 @@ function ModuleCard({ data, accent, index }: ModuleCardProps) {
         </div>
 
         {/* Bottom row: latest entry */}
-        <div className="border-t border-border/50 px-6 pt-4 pb-6">
+        <div className="border-t border-border/30 dark:border-zinc-800/30 px-6 pt-4 pb-6">
           <div className="flex items-center justify-between">
             <div>
               <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
