@@ -37,10 +37,10 @@ export default function LandingPage({
   },
 }: LandingPageProps) {
   return (
-    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-[#08090a]">
-      {/* Grid background */}
+    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background dark:bg-[#08090a]">
+      {/* Grid background (dark mode only) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 hidden opacity-[0.03] dark:block"
         style={{
           backgroundImage: `
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -50,9 +50,9 @@ export default function LandingPage({
         }}
       />
 
-      {/* Scanline effect */}
+      {/* Scanline effect (dark mode only) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.015]"
+        className="pointer-events-none absolute inset-0 hidden opacity-[0.015] dark:block"
         style={{
           backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)`,
         }}
@@ -64,11 +64,11 @@ export default function LandingPage({
           className="mb-12"
           style={{ animation: "fade-in 0.6s ease-out both" }}
         >
-          <h1 className="text-5xl font-extrabold tracking-tight text-white md:text-7xl lg:text-8xl"
+          <h1 className="text-5xl font-extrabold tracking-tight text-foreground dark:text-white md:text-7xl lg:text-8xl"
               style={{ fontFamily: "var(--font-bricolage), sans-serif" }}>
             Dashboard
           </h1>
-          <p className="mt-3 max-w-md text-base leading-relaxed text-zinc-500">
+          <p className="mt-3 max-w-md text-base leading-relaxed text-muted-foreground">
             Records management command center. Navigate to any module below.
           </p>
         </header>
@@ -79,25 +79,25 @@ export default function LandingPage({
           style={{ animation: "fade-in 0.6s 0.15s ease-out both" }}
         >
           {[
-            { label: "Customers", value: recordsData.total, icon: Users, color: "text-amber-400" },
-            { label: "Staff", value: inventoryData.total, icon: UserCheck, color: "text-emerald-400" },
-            { label: "Latest Entry", value: recordsData.recent, icon: Activity, color: "text-sky-400" },
-            { label: "Sync", value: "NOW", icon: Zap, color: "text-violet-400" },
+            { label: "Customers", value: recordsData.total, icon: Users, color: "text-amber-600 dark:text-amber-400" },
+            { label: "Staff", value: inventoryData.total, icon: UserCheck, color: "text-emerald-600 dark:text-emerald-400" },
+            { label: "Latest Entry", value: recordsData.recent, icon: Activity, color: "text-sky-600 dark:text-sky-400" },
+            { label: "Sync", value: "NOW", icon: Zap, color: "text-violet-600 dark:text-violet-400" },
           ].map((stat, i) => {
             const Icon = stat.icon
             return (
               <div
                 key={stat.label}
-                className="group relative overflow-hidden rounded-lg border border-zinc-800/80 bg-zinc-900/40 px-4 py-5 backdrop-blur-sm transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/70"
+                className="group relative overflow-hidden rounded-lg border bg-card/50 backdrop-blur-sm transition-all duration-300 hover:bg-card hover:shadow-sm dark:border-zinc-800/80 dark:bg-zinc-900/40 dark:hover:bg-zinc-900/70"
                 style={{ animation: `fade-in 0.5s ${0.2 + i * 0.06}s ease-out both` }}
               >
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-500">
+                <div className="mb-2 flex items-center justify-between px-4 pt-4">
+                  <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">
                     {stat.label}
                   </span>
                   <Icon className={`h-3.5 w-3.5 ${stat.color} opacity-60 transition-opacity group-hover:opacity-100`} />
                 </div>
-                <div className={`text-xl font-extrabold tracking-tight ${stat.color}`}>
+                <div className={`px-4 pb-4 text-xl font-extrabold tracking-tight ${stat.color}`}>
                   {stat.value}
                 </div>
               </div>
@@ -124,16 +124,16 @@ export default function LandingPage({
 
         {/* ─── Footer Note ─── */}
         <div
-          className="mt-10 rounded-lg border border-zinc-800/60 bg-zinc-900/30 px-5 py-4"
+          className="mt-10 rounded-lg border bg-muted/50 px-5 py-4"
           style={{ animation: "fade-in 0.5s 0.6s ease-out both" }}
         >
           <div className="flex items-start gap-3">
-            <span className="mt-0.5 inline-flex h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+            <span className="mt-0.5 inline-flex h-2 w-2 shrink-0 rounded-full bg-amber-500 dark:bg-amber-400" />
             <div>
-              <p className="text-sm font-semibold text-zinc-300">
+              <p className="text-sm font-semibold text-foreground">
                 Placeholder Data
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                 All values shown here are hardcoded for layout purposes. Once the backend is connected, these cards will pull live data from the database — including real counts, the most recent entries, and last-updated timestamps.
               </p>
             </div>
@@ -153,20 +153,20 @@ interface ModuleCardProps {
 
 const accentMap = {
   amber: {
-    text: "text-amber-400",
-    bgSoft: "bg-amber-400/5",
-    border: "border-amber-400/20",
-    borderHover: "hover:border-amber-400/40",
-    titleHover: "group-hover:text-amber-400",
-    arrowHover: "group-hover:text-amber-400",
+    text: "text-amber-600 dark:text-amber-400",
+    bgSoft: "bg-amber-500/5 dark:bg-amber-400/5",
+    border: "border-amber-500/20 dark:border-amber-400/20",
+    borderHover: "hover:border-amber-500/40 dark:hover:border-amber-400/40",
+    titleHover: "group-hover:text-amber-600 dark:group-hover:text-amber-400",
+    arrowHover: "group-hover:text-amber-600 dark:group-hover:text-amber-400",
   },
   emerald: {
-    text: "text-emerald-400",
-    bgSoft: "bg-emerald-400/5",
-    border: "border-emerald-400/20",
-    borderHover: "hover:border-emerald-400/40",
-    titleHover: "group-hover:text-emerald-400",
-    arrowHover: "group-hover:text-emerald-400",
+    text: "text-emerald-600 dark:text-emerald-400",
+    bgSoft: "bg-emerald-500/5 dark:bg-emerald-400/5",
+    border: "border-emerald-500/20 dark:border-emerald-400/20",
+    borderHover: "hover:border-emerald-500/40 dark:hover:border-emerald-400/40",
+    titleHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
+    arrowHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
   },
 }
 
@@ -177,44 +177,44 @@ function ModuleCard({ data, accent, index }: ModuleCardProps) {
   return (
     <Link href={data.href} className="group" style={{ animation: `fade-in 0.5s ${0.45 + index * 0.1}s ease-out both` }}>
       <article
-        className={`relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/30 p-7 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 ${a.border} ${a.borderHover}`}
+        className={`relative overflow-hidden rounded-xl border bg-card/50 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/30 ${a.border} ${a.borderHover}`}
       >
         {/* Top row: icon + title + timestamp */}
-        <div className="mb-6 flex items-start justify-between">
+        <div className="mb-6 flex items-start justify-between px-6 pt-6">
           <div className="flex items-center gap-3">
-            <div className={`flex h-11 w-11 items-center justify-center rounded-lg border ${a.border} ${a.bgSoft} transition-all duration-300 group-hover:scale-110`}>
+            <div className={`flex h-11 w-11 items-center justify-center rounded-lg border transition-all duration-300 group-hover:scale-110 dark:${a.border} ${a.bgSoft}`}>
               <Icon className={`h-5 w-5 ${a.text}`} />
             </div>
             <div>
-              <h2 className={`text-lg font-bold tracking-tight text-white transition-colors duration-300 ${a.titleHover}`}>
+              <h2 className={`text-lg font-bold tracking-tight text-card-foreground transition-colors duration-300 ${a.titleHover}`}>
                 {data.title}
               </h2>
-              <p className="font-mono text-[11px] tracking-wider text-zinc-600">{data.updated}</p>
+              <p className="font-mono text-[11px] tracking-wider text-muted-foreground">{data.updated}</p>
             </div>
           </div>
-          <ArrowUpRight className={`h-5 w-5 text-zinc-600 transition-all duration-300 ${a.arrowHover} group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
+          <ArrowUpRight className={`h-5 w-5 text-muted-foreground transition-all duration-300 ${a.arrowHover} group-hover:translate-x-0.5 group-hover:-translate-y-0.5`} />
         </div>
 
         {/* Big number */}
-        <div className="mb-5 flex items-end gap-3">
-          <span className="text-6xl font-black tracking-tighter text-white md:text-7xl">
+        <div className="mb-5 px-6">
+          <span className="text-6xl font-black tracking-tighter text-foreground dark:text-white md:text-7xl">
             {data.total}
           </span>
         </div>
-        <div className={`mb-5 inline-block rounded-md px-3 py-1 ${a.bgSoft}`}>
-          <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-zinc-500">
+        <div className={`mx-6 mb-5 inline-block rounded-md px-3 py-1 ${a.bgSoft}`}>
+          <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-muted-foreground">
             {data.totalLabel}
           </span>
         </div>
 
         {/* Bottom row: latest entry */}
-        <div className="border-t border-zinc-800/60 pt-4">
+        <div className="border-t border-border/50 px-6 pt-4 pb-6">
           <div className="flex items-center justify-between">
             <div>
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-zinc-600">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
                 {data.recentLabel}{" "}
               </span>
-              <span className="text-sm font-semibold text-zinc-300">{data.recent}</span>
+              <span className="text-sm font-semibold text-muted-foreground">{data.recent}</span>
             </div>
           </div>
         </div>

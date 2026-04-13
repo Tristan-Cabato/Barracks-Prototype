@@ -24,7 +24,6 @@ import {
   Calendar,
   Hash,
   Users,
-  X,
 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -246,10 +245,10 @@ export default function CustomerRecordsPage() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-[#08090a]">
-      {/* Grid background */}
+    <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background dark:bg-[#08090a]">
+      {/* Grid background (dark mode only) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        className="pointer-events-none absolute inset-0 hidden opacity-[0.03] dark:block"
         style={{
           backgroundImage: `
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -259,9 +258,9 @@ export default function CustomerRecordsPage() {
         }}
       />
 
-      {/* Scanline effect */}
+      {/* Scanline effect (dark mode only) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.015]"
+        className="pointer-events-none absolute inset-0 hidden opacity-[0.015] dark:block"
         style={{
           backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)`,
         }}
@@ -275,20 +274,20 @@ export default function CustomerRecordsPage() {
         >
           <div>
             <div className="mb-2 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-400/20 bg-amber-400/5">
-                <Users className="h-4 w-4 text-amber-400" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-md border border-amber-400/20 bg-amber-400/5 dark:bg-amber-400/5">
+                <Users className="h-4 w-4 text-amber-500 dark:text-amber-400" />
               </div>
-              <span className="font-mono text-[11px] font-medium tracking-[0.25em] uppercase text-zinc-500">
+              <span className="font-mono text-[11px] font-medium tracking-[0.25em] uppercase text-muted-foreground">
                 Module
               </span>
             </div>
             <h1
-              className="text-4xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl"
+              className="text-4xl font-extrabold tracking-tight text-foreground dark:text-white md:text-6xl lg:text-7xl"
               style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
             >
               Customers
             </h1>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-zinc-500">
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
               Browse, search, and manage all customer records.
             </p>
           </div>
@@ -298,7 +297,7 @@ export default function CustomerRecordsPage() {
             <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
               <DialogTrigger asChild>
                 <Button
-                  className="h-10 gap-2 border border-amber-400/20 bg-amber-400/5 text-amber-400 transition-all duration-300 hover:bg-amber-400/10 hover:text-amber-300"
+                  className="h-10 gap-2 border border-amber-400/20 bg-amber-400/5 text-amber-600 dark:text-amber-400 transition-all duration-300 hover:bg-amber-400/10 hover:text-amber-700 dark:hover:text-amber-300"
                   style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
                 >
                   <Plus className="h-4 w-4" />
@@ -307,10 +306,10 @@ export default function CustomerRecordsPage() {
               </DialogTrigger>
 
               {/* ─── Create Dialog ─── */}
-              <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+              <DialogContent>
                 <DialogHeader>
-                  <DialogTitle className="text-xl text-white">Add Customer</DialogTitle>
-                  <DialogDescription className="text-zinc-500">
+                  <DialogTitle className="text-xl">Add Customer</DialogTitle>
+                  <DialogDescription>
                     Enter the details for the new customer record.
                   </DialogDescription>
                 </DialogHeader>
@@ -324,7 +323,6 @@ export default function CustomerRecordsPage() {
                           setFormData((previous) => ({ ...previous, name: event.target.value }))
                         }
                         placeholder="John Doe"
-                        className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                       />
                     </Field>
                     <Field label="Email" icon={Mail}>
@@ -335,7 +333,6 @@ export default function CustomerRecordsPage() {
                           setFormData((previous) => ({ ...previous, email: event.target.value }))
                         }
                         placeholder="name@email.com"
-                        className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                       />
                     </Field>
                     <Field label="Contact Number" icon={Phone}>
@@ -349,27 +346,18 @@ export default function CustomerRecordsPage() {
                           }))
                         }
                         placeholder="+63 917 555 0111"
-                        className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                       />
                     </Field>
                   </div>
                   {formError && (
-                    <p className="text-sm text-red-400">{formError}</p>
+                    <p className="text-sm text-destructive">{formError}</p>
                   )}
                 </form>
                 <DialogFooter>
-                  <Button
-                    variant="outline"
-                    onClick={() => setCreateDialogOpen(false)}
-                    className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100"
-                  >
+                  <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button
-                    type="submit"
-                    form="create-form"
-                    className="border border-amber-400/20 bg-amber-400/10 text-amber-400 hover:bg-amber-400/20 hover:text-amber-300"
-                  >
+                  <Button type="submit" form="create-form">
                     Add Customer
                   </Button>
                 </DialogFooter>
@@ -384,42 +372,42 @@ export default function CustomerRecordsPage() {
           style={{ animation: "fade-in 0.5s 0.1s ease-out both" }}
         >
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-600" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search customers by name"
-              className="border-zinc-800 bg-zinc-900/40 pl-9 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/30 focus:ring-amber-400/10"
+              className="pl-9"
             />
           </div>
           <Select
             value={sortBy}
             onValueChange={(value) => setSortBy(value as typeof sortBy)}
           >
-            <SelectTrigger className="w-full sm:w-[200px] border-zinc-800 bg-zinc-900/40 text-zinc-300 focus:border-amber-400/30 focus:ring-amber-400/10">
+            <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
-            <SelectContent className="border-zinc-800 bg-zinc-900 text-zinc-300">
-              <SelectItem value="name-asc" className="focus:bg-zinc-800 focus:text-zinc-100">Name A–Z</SelectItem>
-              <SelectItem value="name-desc" className="focus:bg-zinc-800 focus:text-zinc-100">Name Z–A</SelectItem>
-              <SelectItem value="recent" className="focus:bg-zinc-800 focus:text-zinc-100">Recently Added</SelectItem>
+            <SelectContent>
+              <SelectItem value="name-asc">Name A–Z</SelectItem>
+              <SelectItem value="name-desc">Name Z–A</SelectItem>
+              <SelectItem value="recent">Recently Added</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         {/* ─── Records Panel ─── */}
         <div
-          className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/20"
+          className="overflow-hidden rounded-xl border bg-card shadow-sm"
           style={{ animation: "fade-in 0.5s 0.2s ease-out both" }}
         >
           {/* Panel header */}
-          <div className="flex items-center justify-between border-b border-zinc-800/60 px-5 py-3">
+          <div className="flex items-center justify-between border-b bg-muted/30 px-5 py-3">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-zinc-500">
+              <span className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-muted-foreground">
                 All Customers
               </span>
-              <span className="rounded bg-zinc-800/80 px-2 py-0.5 font-mono text-[10px] font-bold text-zinc-400">
+              <span className="rounded bg-muted px-2 py-0.5 font-mono text-[10px] font-bold text-muted-foreground">
                 {filteredCustomers.length}
               </span>
             </div>
@@ -427,33 +415,33 @@ export default function CustomerRecordsPage() {
 
           {filteredCustomers.length === 0 ? (
             <div className="px-5 py-16 text-center">
-              <p className="text-sm text-zinc-600">
+              <p className="text-sm text-muted-foreground">
                 {searchQuery
                   ? "No customers match your search."
                   : "No customers yet. Add one to get started."}
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-zinc-800/50">
+            <div className="divide-y">
               {filteredCustomers.map((customer, index) => (
                 <div
                   key={customer.id}
-                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:bg-zinc-800/30"
+                  className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:bg-accent/50"
                   style={{
                     animation: `fade-in 0.4s ${0.05 + index * 0.04}s ease-out both`,
                   }}
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-zinc-200 transition-colors group-hover:text-amber-400">
+                    <p className="text-sm font-semibold text-card-foreground transition-colors group-hover:text-amber-600 dark:group-hover:text-amber-400">
                       {customer.name}
                     </p>
-                    <div className="mt-1 flex items-center gap-4 text-xs text-zinc-500">
+                    <div className="mt-1 flex items-center gap-4 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1 truncate">
-                        <Mail className="h-3 w-3 flex-shrink-0 text-zinc-600" />
+                        <Mail className="h-3 w-3 flex-shrink-0" />
                         {customer.email}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Phone className="h-3 w-3 flex-shrink-0 text-zinc-600" />
+                        <Phone className="h-3 w-3 flex-shrink-0" />
                         {customer.contactNumber}
                       </span>
                     </div>
@@ -463,19 +451,19 @@ export default function CustomerRecordsPage() {
                       icon={<Eye className="h-3.5 w-3.5" />}
                       label="View"
                       onClick={() => setViewingCustomerId(customer.id)}
-                      hoverColor="text-sky-400 hover:bg-sky-400/10"
+                      hoverColor="hover:bg-primary/10 hover:text-primary"
                     />
                     <IconBtn
                       icon={<Pencil className="h-3.5 w-3.5" />}
                       label="Edit"
                       onClick={() => openEditDialog(customer)}
-                      hoverColor="text-amber-400 hover:bg-amber-400/10"
+                      hoverColor="hover:bg-amber-500/10 hover:text-amber-500"
                     />
                     <IconBtn
                       icon={<Trash2 className="h-3.5 w-3.5" />}
                       label="Delete"
                       onClick={() => deleteCustomer(customer.id)}
-                      hoverColor="text-red-400 hover:bg-red-400/10"
+                      hoverColor="hover:bg-destructive/10 hover:text-destructive"
                     />
                   </div>
                 </div>
@@ -486,14 +474,14 @@ export default function CustomerRecordsPage() {
 
         {/* ─── Footer Note ─── */}
         <div
-          className="mt-8 rounded-lg border border-zinc-800/60 bg-zinc-900/30 px-5 py-4"
+          className="mt-8 rounded-lg border bg-muted/50 px-5 py-4"
           style={{ animation: "fade-in 0.5s 0.5s ease-out both" }}
         >
           <div className="flex items-start gap-3">
-            <span className="mt-0.5 inline-flex h-2 w-2 shrink-0 rounded-full bg-amber-400" />
+            <span className="mt-0.5 inline-flex h-2 w-2 shrink-0 rounded-full bg-amber-500 dark:bg-amber-400" />
             <div>
-              <p className="text-sm font-semibold text-zinc-300">Placeholder Data</p>
-              <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+              <p className="text-sm font-semibold text-foreground">Placeholder Data</p>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                 Records are seeded from a local JSON file and stored in your browser&apos;s
                 localStorage. Once a backend is connected, data will sync across sessions and
                 support real-time persistence.
@@ -505,23 +493,23 @@ export default function CustomerRecordsPage() {
 
       {/* ─── View Customer Dialog ─── */}
       <Dialog open={!!viewingCustomerId} onOpenChange={(open) => !open && setViewingCustomerId(null)}>
-        <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+        <DialogContent>
           {viewedCustomer && (
             <>
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-2 text-white">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md border border-sky-400/20 bg-sky-400/5">
-                    <Users className="h-4 w-4 text-sky-400" />
+                <DialogTitle className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-md border border-primary/20 bg-primary/5">
+                    <Users className="h-4 w-4 text-primary" />
                   </div>
                   {viewedCustomer.name}
                 </DialogTitle>
-                <DialogDescription className="text-zinc-500">Customer Details</DialogDescription>
+                <DialogDescription>Customer Details</DialogDescription>
               </DialogHeader>
               <div className="space-y-2 py-4">
-                <DetailRow icon={<Mail className="h-4 w-4 text-zinc-600" />} label="Email" value={viewedCustomer.email} />
-                <DetailRow icon={<Phone className="h-4 w-4 text-zinc-600" />} label="Contact" value={viewedCustomer.contactNumber} />
-                <DetailRow icon={<Hash className="h-4 w-4 text-zinc-600" />} label="Record ID" value={viewedCustomer.id} mono />
-                <DetailRow icon={<Calendar className="h-4 w-4 text-zinc-600" />} label="Created" value={new Date(viewedCustomer.createdAt).toLocaleString()} />
+                <DetailRow icon={<Mail className="h-4 w-4 text-muted-foreground" />} label="Email" value={viewedCustomer.email} />
+                <DetailRow icon={<Phone className="h-4 w-4 text-muted-foreground" />} label="Contact" value={viewedCustomer.contactNumber} />
+                <DetailRow icon={<Hash className="h-4 w-4 text-muted-foreground" />} label="Record ID" value={viewedCustomer.id} mono />
+                <DetailRow icon={<Calendar className="h-4 w-4 text-muted-foreground" />} label="Created" value={new Date(viewedCustomer.createdAt).toLocaleString()} />
               </div>
               <DialogFooter>
                 <Button
@@ -530,18 +518,17 @@ export default function CustomerRecordsPage() {
                     setViewingCustomerId(null);
                     openEditDialog(viewedCustomer);
                   }}
-                  className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-amber-400/30 hover:bg-amber-400/10 hover:text-amber-400"
+                  className="hover:bg-amber-500/10 hover:text-amber-500 hover:border-amber-500/30"
                 >
                   <Pencil className="mr-2 h-4 w-4" />
                   Edit
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="destructive"
                   onClick={() => {
                     setViewingCustomerId(null);
                     deleteCustomer(viewedCustomer.id);
                   }}
-                  className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-red-400/30 hover:bg-red-400/10 hover:text-red-400"
                 >
                   <Trash2 className="mr-2 h-4 w-4" />
                   Delete
@@ -559,11 +546,11 @@ export default function CustomerRecordsPage() {
           if (!open) cancelEdit();
         }}
       >
-        <DialogContent className="border-zinc-800 bg-zinc-900 text-zinc-100">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-white">Edit Customer</DialogTitle>
-            <DialogDescription className="text-zinc-500">
-              Update the details for <span className="font-semibold text-zinc-300">{editingCustomer?.name}</span>.
+            <DialogTitle>Edit Customer</DialogTitle>
+            <DialogDescription>
+              Update the details for <span className="font-semibold">{editingCustomer?.name}</span>.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit} id="edit-form">
@@ -575,7 +562,6 @@ export default function CustomerRecordsPage() {
                   onChange={(event) =>
                     setFormData((previous) => ({ ...previous, name: event.target.value }))
                   }
-                  className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                 />
               </Field>
               <Field label="Email" icon={Mail}>
@@ -586,7 +572,6 @@ export default function CustomerRecordsPage() {
                     setFormData((previous) => ({ ...previous, email: event.target.value }))
                   }
                   placeholder="name@email.com"
-                  className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                 />
               </Field>
               <Field label="Contact Number" icon={Phone}>
@@ -600,25 +585,16 @@ export default function CustomerRecordsPage() {
                     }))
                   }
                   placeholder="+63 917 555 0111"
-                  className="border-zinc-700 bg-zinc-800/50 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/40 focus:ring-amber-400/20"
                 />
               </Field>
             </div>
-            {formError && <p className="text-sm text-red-400">{formError}</p>}
+            {formError && <p className="text-sm text-destructive">{formError}</p>}
           </form>
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={cancelEdit}
-              className="border-zinc-700 bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100"
-            >
+            <Button variant="outline" onClick={cancelEdit}>
               Cancel
             </Button>
-            <Button
-              type="submit"
-              form="edit-form"
-              className="border border-amber-400/20 bg-amber-400/10 text-amber-400 hover:bg-amber-400/20 hover:text-amber-300"
-            >
+            <Button type="submit" form="edit-form">
               Save Changes
             </Button>
           </DialogFooter>
@@ -641,8 +617,8 @@ function Field({
 }) {
   return (
     <div className="space-y-2">
-      <label className="flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-zinc-500">
-        <Icon className="h-3.5 w-3.5 text-zinc-600" />
+      <label className="flex items-center gap-2 text-xs font-semibold tracking-[0.15em] uppercase text-muted-foreground">
+        <Icon className="h-3.5 w-3.5" />
         {label}
       </label>
       {children}
@@ -662,14 +638,14 @@ function DetailRow({
   mono?: boolean;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-zinc-800/30">
+    <div className="flex items-start gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-accent/50">
       <span className="mt-0.5">{icon}</span>
       <div className="min-w-0 flex-1">
-        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-zinc-600">
+        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground">
           {label}
         </p>
         <p
-          className={`text-sm text-zinc-300 ${mono ? "font-mono break-all" : "truncate"}`}
+          className={`text-sm text-foreground ${mono ? "font-mono break-all" : "truncate"}`}
         >
           {value}
         </p>
@@ -693,7 +669,7 @@ function IconBtn({
     <button
       onClick={onClick}
       title={label}
-      className={`flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 transition-all duration-200 ${hoverColor}`}
+      className={`flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-all duration-200 ${hoverColor}`}
     >
       {icon}
     </button>
