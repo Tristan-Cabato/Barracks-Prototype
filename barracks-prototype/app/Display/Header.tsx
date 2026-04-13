@@ -1,24 +1,59 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import Link from 'next/link'
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { LayoutDashboard, Users, UserCheck, Database } from "lucide-react"
 
 export default function Header() {
-    return (
-        <header className="flex flex-row justify-between items-center p-4 bg-gray-800 sticky top-0 z-2">
-            <div className="flex flex-row items-center mx-4 gap-8">
-                <Link href="/Records/CustomerRecords">
-                    <h2 className="hover:scale-115 hover:font-bold hover:shadow-lg transition-transform cursor-pointer">Customer Records</h2>
-                </Link>
-                <Link href="/Records/StaffRecords">
-                    <h2 className="hover:scale-115 hover:font-bold hover:shadow-lg transition-transform cursor-pointer">Staff Records</h2>
-                </Link>
-            </div>
+  const pathname = usePathname()
+  
+  // Don't show header on login page
+  if (pathname === "/" || pathname === "/Display/LoginPage") {
+    return null
+  }
 
-            <div className="flex flex-row items-center gap-4">
-                <span className="px-4 py-2 mx-4 rounded-lg bg-gray-700 text-white text-sm">Records Management</span>
-            </div> {/* Search Feature goes here */}
+  const navItems = [
+    { href: "/Display/LandingPage", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/Records/CustomerRecords", label: "Customers", icon: Users },
+    { href: "/Records/StaffRecords", label: "Staff", icon: UserCheck },
+  ]
 
-            <div className="items-center mx-8 hover:scale-150 hover:font-bold hover:shadow-lg transition-transform cursor-pointer"> <FontAwesomeIcon icon={faUser} style={{color: "white"}}/> </div>
-        </header>
-    )
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 max-w-screen-2xl items-center">
+        <div className="flex items-center space-x-4">
+          <Link href="/Display/LandingPage" className="flex items-center space-x-2">
+            <Database className="h-6 w-6" />
+            <span className="font-bold">Barracks</span>
+          </Link>
+          
+          <nav className="flex items-center space-x-2 lg:space-x-4">
+            {navItems.map((item) => {
+              const Icon = item.icon
+              const isActive = pathname === item.href
+              return (
+                <Link key={item.href} href={item.href}>
+                  <Button
+                    variant={isActive ? "default" : "ghost"}
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </Button>
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+        
+        <div className="flex flex-1 items-center justify-end space-x-2">
+          <span className="px-3 py-1 text-sm text-muted-foreground">
+            Records Management
+          </span>
+        </div>
+      </div>
+    </header>
+  )
 }

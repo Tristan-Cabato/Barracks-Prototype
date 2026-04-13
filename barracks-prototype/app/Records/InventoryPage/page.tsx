@@ -1,14 +1,8 @@
-import Link from "next/link";
-import Header from "../../Display/Header";
-
 export default function InventoryPage() {
-    return (
-        <>
-            <Header />
-            <div className="p-8 min-h-screen flex flex-col items-center justify-center backdrop-blur-sm bg-black/20">
-                <h1 className="text-3xl font-bold text-white mb-6">Inventory Page</h1>
-                <Link href="/" className="text-white/80 hover:text-white"> Go Back </Link>
-            </div>
-        </>
-    )
+  return (
+    <div className="container mx-auto py-10 px-8 flex flex-col items-center justify-center min-h-[calc(100vh-3.5rem)]">
+      <h1 className="text-3xl font-bold mb-4">Inventory Page</h1>
+      <p className="text-muted-foreground">This page is under construction.</p>
+    </div>
+  )
 }

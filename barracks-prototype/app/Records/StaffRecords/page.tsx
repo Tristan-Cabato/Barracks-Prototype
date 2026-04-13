@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import Header from "@/app/Display/Header";
 import seedStaff from "@/app/data/staff.json";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type StaffMember = {
   id: string;
@@ -243,57 +244,59 @@ export default function StaffRecordsPage() {
   };
 
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,_rgba(6,95,70,0.5),_transparent_55%),linear-gradient(120deg,_#111827_0%,_#1f2937_35%,_#0f172a_100%)]">
-        <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
-          <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
-            <h1 className="text-3xl font-bold">Staff Records</h1>
-            <p className="mt-1 text-sm text-white/70">
-              Track staff details, filter by role, and monitor monthly salary quickly.
-            </p>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,_rgba(6,95,70,0.5),_transparent_55%),linear-gradient(120deg,_#111827_0%,_#1f2937_35%,_#0f172a_100%)]">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
+        <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
+          <h1 className="text-3xl font-bold">Staff Records</h1>
+          <p className="mt-1 text-sm text-white/70">
+            Track staff details, filter by role, and monitor monthly salary quickly.
+          </p>
 
-            <div className="mt-4 grid gap-3 md:grid-cols-3">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search staff by name"
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-              />
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search staff by name"
+              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+            />
 
-              <select
-                value={roleFilter}
-                onChange={(event) => setRoleFilter(event.target.value)}
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-              >
-                {roleOptions.map((role) => (
-                  <option key={role} value={role}>
-                    {role === "all" ? "Filter: All Roles" : `Role: ${role}`}
-                  </option>
-                ))}
-              </select>
+            <select
+              value={roleFilter}
+              onChange={(event) => setRoleFilter(event.target.value)}
+              className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2 text-white"
+            >
+              {roleOptions.map((role) => (
+                <option key={role} value={role}>
+                  {role === "all" ? "Filter: All Roles" : `Role: ${role}`}
+                </option>
+              ))}
+            </select>
 
-              <select
-                value={sortBy}
-                onChange={(event) =>
-                  setSortBy(event.target.value as "name-asc" | "salary-high" | "salary-low")
-                }
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-              >
-                <option value="name-asc">Sort: Name A-Z</option>
-                <option value="salary-high">Sort: Salary High-Low</option>
-                <option value="salary-low">Sort: Salary Low-High</option>
-              </select>
-            </div>
-          </section>
+            <select
+              value={sortBy}
+              onChange={(event) =>
+                setSortBy(event.target.value as "name-asc" | "salary-high" | "salary-low")
+              }
+              className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2 text-white"
+            >
+              <option value="name-asc">Sort: Name A-Z</option>
+              <option value="salary-high">Sort: Salary High-Low</option>
+              <option value="salary-low">Sort: Salary Low-High</option>
+            </select>
+          </div>
+        </section>
 
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-            <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
-              <h2 className="text-xl font-semibold">Record List View</h2>
-              <p className="mt-1 text-sm text-white/70">{filteredStaff.length} staff record(s)</p>
-
-              <div className="mt-4 space-y-3">
+        <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+          <Card className="rounded-2xl border border-white/15 bg-black/45 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle>Record List View</CardTitle>
+              <CardDescription className="text-white/70">
+                {filteredStaff.length} staff record(s)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
                 {filteredStaff.map((member) => (
                   <article
                     key={member.id}
@@ -312,27 +315,27 @@ export default function StaffRecordsPage() {
                     </p>
 
                     <div className="mt-3 flex gap-2">
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
                         onClick={() => setSelectedStaffId(member.id)}
-                        className="rounded-md bg-sky-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-400"
+                        className="bg-sky-500 hover:bg-sky-400 text-white"
                       >
                         View
-                      </button>
-                      <button
-                        type="button"
+                      </Button>
+                      <Button
+                        size="sm"
                         onClick={() => startEdit(member)}
-                        className="rounded-md bg-amber-500 px-3 py-1.5 text-sm font-medium text-black hover:bg-amber-400"
+                        className="bg-amber-500 hover:bg-amber-400 text-black"
                       >
                         Edit
-                      </button>
-                      <button
-                        type="button"
+                      </Button>
+                      <Button
+                        size="sm"
                         onClick={() => deleteStaff(member.id)}
-                        className="rounded-md bg-rose-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-rose-500"
+                        className="bg-rose-600 hover:bg-rose-500 text-white"
                       >
                         Delete
-                      </button>
+                      </Button>
                     </div>
                   </article>
                 ))}
@@ -343,105 +346,106 @@ export default function StaffRecordsPage() {
                   </p>
                 )}
               </div>
-            </section>
+            </CardContent>
+          </Card>
 
-            <section className="space-y-6">
-              <form
-                onSubmit={handleSubmit}
-                className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm"
-              >
-                <h2 className="text-xl font-semibold">{editingStaffId ? "Edit Staff" : "Create Staff"}</h2>
+          <section className="space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm"
+            >
+              <h2 className="text-xl font-semibold">{editingStaffId ? "Edit Staff" : "Create Staff"}</h2>
 
-                <div className="mt-4 space-y-3">
-                  <label className="block text-sm">
-                    Name
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, name: event.target.value }))
-                      }
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
+              <div className="mt-4 space-y-3">
+                <label className="block text-sm">
+                  Name
+                  <Input
+                    type="text"
+                    value={formData.name}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, name: event.target.value }))
+                    }
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
 
-                  <label className="block text-sm">
-                    Role
-                    <input
-                      type="text"
-                      value={formData.role}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, role: event.target.value }))
-                      }
-                      placeholder="e.g., Barber, Cashier"
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
+                <label className="block text-sm">
+                  Role
+                  <Input
+                    type="text"
+                    value={formData.role}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, role: event.target.value }))
+                    }
+                    placeholder="e.g., Barber, Cashier"
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
 
-                  <label className="block text-sm">
-                    Email
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, email: event.target.value }))
-                      }
-                      placeholder="name@email.com"
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
+                <label className="block text-sm">
+                  Email
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, email: event.target.value }))
+                    }
+                    placeholder="name@email.com"
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
 
-                  <label className="block text-sm">
-                    Contact Number
-                    <input
-                      type="tel"
-                      value={formData.contactNumber}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, contactNumber: event.target.value }))
-                      }
-                      placeholder="+63 917 555 0210"
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
+                <label className="block text-sm">
+                  Contact Number
+                  <Input
+                    type="tel"
+                    value={formData.contactNumber}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, contactNumber: event.target.value }))
+                    }
+                    placeholder="+63 917 555 0210"
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
 
-                  <label className="block text-sm">
-                    Monthly Salary
-                    <input
-                      type="number"
-                      min="0"
-                      value={formData.monthlySalary}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, monthlySalary: event.target.value }))
-                      }
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
-                </div>
+                <label className="block text-sm">
+                  Monthly Salary
+                  <Input
+                    type="number"
+                    min="0"
+                    value={formData.monthlySalary}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, monthlySalary: event.target.value }))
+                    }
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
+              </div>
 
-                {formError && <p className="mt-3 text-sm text-red-300">{formError}</p>}
+              {formError && <p className="mt-3 text-sm text-red-300">{formError}</p>}
 
-                <div className="mt-4 flex gap-2">
-                  <button
-                    type="submit"
-                    className="rounded-md bg-emerald-500 px-4 py-2 font-semibold text-black hover:bg-emerald-400"
+              <div className="mt-4 flex gap-2">
+                <Button type="submit" className="bg-emerald-500 hover:bg-emerald-400 text-black">
+                  {editingStaffId ? "Save Changes" : "Add Staff"}
+                </Button>
+                {editingStaffId && (
+                  <Button
+                    type="button"
+                    onClick={cancelEdit}
+                    variant="outline"
+                    className="border-white/30 text-white hover:bg-white/10"
                   >
-                    {editingStaffId ? "Save Changes" : "Add Staff"}
-                  </button>
-                  {editingStaffId && (
-                    <button
-                      type="button"
-                      onClick={cancelEdit}
-                      className="rounded-md border border-white/30 px-4 py-2 font-semibold text-white hover:bg-white/10"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-              </form>
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </form>
 
-              <article className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
-                <h2 className="text-xl font-semibold">Staff Detail View</h2>
-
+            <Card className="rounded-2xl border border-white/15 bg-black/45 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Staff Detail View</CardTitle>
+              </CardHeader>
+              <CardContent>
                 {selectedStaff ? (
                   <div className="mt-3 space-y-2 text-sm">
                     <p>
@@ -467,28 +471,22 @@ export default function StaffRecordsPage() {
                     <p>
                       <span className="font-semibold text-white/85">Record ID:</span> {selectedStaff.id}
                     </p>
-                    <button
-                      type="button"
+                    <Button
+                      size="sm"
                       onClick={() => deleteStaff(selectedStaff.id)}
-                      className="mt-2 rounded-md bg-rose-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-600"
+                      className="mt-2 bg-rose-700 hover:bg-rose-600 text-white"
                     >
                       Delete This Staff Record
-                    </button>
+                    </Button>
                   </div>
                 ) : (
                   <p className="mt-3 text-sm text-white/70">Select a staff member to view full info.</p>
                 )}
-              </article>
-            </section>
-          </div>
-        </div>
-
-        <div className="mx-auto max-w-6xl px-4 pb-8 md:px-8">
-          <Link href="/Display/LandingPage" className="text-sm text-white/80 hover:text-white">
-            Back to Dashboard
-          </Link>
+              </CardContent>
+            </Card>
+          </section>
         </div>
       </div>
-    </>
+    </div>
   );
 }

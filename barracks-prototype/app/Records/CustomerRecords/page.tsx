@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import Header from "@/app/Display/Header";
 import seedCustomers from "@/app/data/customers.json";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Customer = {
   id: string;
@@ -213,43 +214,45 @@ export default function CustomerRecordsPage() {
   };
 
   return (
-    <>
-      <Header />
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(29,78,216,0.45),_transparent_60%),linear-gradient(135deg,_#111827_0%,_#1f2937_45%,_#0f172a_100%)]">
-        <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
-          <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
-            <h1 className="text-3xl font-bold">Customer Records</h1>
-            <p className="mt-1 text-sm text-white/70">
-              Manage customer data with search and sorting, then view full details in one click.
-            </p>
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search customers by name"
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-              />
-              <select
-                value={sortBy}
-                onChange={(event) =>
-                  setSortBy(event.target.value as "name-asc" | "name-desc" | "recent")
-                }
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-              >
-                <option value="name-asc">Sort: Name A-Z</option>
-                <option value="name-desc">Sort: Name Z-A</option>
-                <option value="recent">Sort: Recently Added</option>
-              </select>
-            </div>
-          </section>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(29,78,216,0.45),_transparent_60%),linear-gradient(135deg,_#111827_0%,_#1f2937_45%,_#0f172a_100%)]">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
+        <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
+          <h1 className="text-3xl font-bold">Customer Records</h1>
+          <p className="mt-1 text-sm text-white/70">
+            Manage customer data with search and sorting, then view full details in one click.
+          </p>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search customers by name"
+              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+            />
+            <select
+              value={sortBy}
+              onChange={(event) =>
+                setSortBy(event.target.value as "name-asc" | "name-desc" | "recent")
+              }
+              className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2 text-white"
+            >
+              <option value="name-asc">Sort: Name A-Z</option>
+              <option value="name-desc">Sort: Name Z-A</option>
+              <option value="recent">Sort: Recently Added</option>
+            </select>
+          </div>
+        </section>
 
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-            <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
-              <h2 className="text-xl font-semibold">Record List View</h2>
-              <p className="mt-1 text-sm text-white/70">{filteredCustomers.length} customer record(s)</p>
-
-              <div className="mt-4 space-y-3">
+        <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+          <Card className="rounded-2xl border border-white/15 bg-black/45 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle>Record List View</CardTitle>
+              <CardDescription className="text-white/70">
+                {filteredCustomers.length} customer record(s)
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
                 {filteredCustomers.map((customer) => (
                   <article
                     key={customer.id}
@@ -259,27 +262,27 @@ export default function CustomerRecordsPage() {
                     <p className="text-sm text-white/75">{customer.email}</p>
                     <p className="text-sm text-white/75">{customer.contactNumber}</p>
                     <div className="mt-3 flex gap-2">
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
                         onClick={() => setSelectedCustomerId(customer.id)}
-                        className="rounded-md bg-sky-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-400"
+                        className="bg-sky-500 hover:bg-sky-400 text-white"
                       >
                         View
-                      </button>
-                      <button
-                        type="button"
+                      </Button>
+                      <Button
+                        size="sm"
                         onClick={() => startEdit(customer)}
-                        className="rounded-md bg-amber-500 px-3 py-1.5 text-sm font-medium text-black hover:bg-amber-400"
+                        className="bg-amber-500 hover:bg-amber-400 text-black"
                       >
                         Edit
-                      </button>
-                      <button
-                        type="button"
+                      </Button>
+                      <Button
+                        size="sm"
                         onClick={() => deleteCustomer(customer.id)}
-                        className="rounded-md bg-rose-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-rose-500"
+                        className="bg-rose-600 hover:bg-rose-500 text-white"
                       >
                         Delete
-                      </button>
+                      </Button>
                     </div>
                   </article>
                 ))}
@@ -290,83 +293,87 @@ export default function CustomerRecordsPage() {
                   </p>
                 )}
               </div>
-            </section>
+            </CardContent>
+          </Card>
 
-            <section className="space-y-6">
-              <form
-                onSubmit={handleSubmit}
-                className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm"
-              >
-                <h2 className="text-xl font-semibold">
-                  {editingCustomerId ? "Edit Customer" : "Create Customer"}
-                </h2>
+          <section className="space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm"
+            >
+              <h2 className="text-xl font-semibold">
+                {editingCustomerId ? "Edit Customer" : "Create Customer"}
+              </h2>
 
-                <div className="mt-4 space-y-3">
-                  <label className="block text-sm">
-                    Name
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, name: event.target.value }))
-                      }
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
+              <div className="mt-4 space-y-3">
+                <label className="block text-sm">
+                  Name
+                  <Input
+                    type="text"
+                    value={formData.name}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, name: event.target.value }))
+                    }
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
 
-                  <label className="block text-sm">
-                    Email
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, email: event.target.value }))
-                      }
-                      placeholder="name@email.com"
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
+                <label className="block text-sm">
+                  Email
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(event) =>
+                      setFormData((previous) => ({ ...previous, email: event.target.value }))
+                    }
+                    placeholder="name@email.com"
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
 
-                  <label className="block text-sm">
-                    Contact Number
-                    <input
-                      type="tel"
-                      value={formData.contactNumber}
-                      onChange={(event) =>
-                        setFormData((previous) => ({ ...previous, contactNumber: event.target.value }))
-                      }
-                      placeholder="+63 917 555 0111"
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
-                    />
-                  </label>
-                </div>
+                <label className="block text-sm">
+                  Contact Number
+                  <Input
+                    type="tel"
+                    value={formData.contactNumber}
+                    onChange={(event) =>
+                      setFormData((previous) => ({
+                        ...previous,
+                        contactNumber: event.target.value,
+                      }))
+                    }
+                    placeholder="+63 917 555 0111"
+                    className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                </label>
+              </div>
 
-                {formError && <p className="mt-3 text-sm text-red-300">{formError}</p>}
+              {formError && <p className="mt-3 text-sm text-red-300">{formError}</p>}
 
-                <div className="mt-4 flex gap-2">
-                  <button
-                    type="submit"
-                    className="rounded-md bg-emerald-500 px-4 py-2 font-semibold text-black hover:bg-emerald-400"
+              <div className="mt-4 flex gap-2">
+                <Button type="submit" className="bg-emerald-500 hover:bg-emerald-400 text-black">
+                  {editingCustomerId ? "Save Changes" : "Add Customer"}
+                </Button>
+                {editingCustomerId && (
+                  <Button
+                    type="button"
+                    onClick={cancelEdit}
+                    variant="outline"
+                    className="border-white/30 text-white hover:bg-white/10"
                   >
-                    {editingCustomerId ? "Save Changes" : "Add Customer"}
-                  </button>
-                  {editingCustomerId && (
-                    <button
-                      type="button"
-                      onClick={cancelEdit}
-                      className="rounded-md border border-white/30 px-4 py-2 font-semibold text-white hover:bg-white/10"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-              </form>
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </form>
 
-              <article className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
-                <h2 className="text-xl font-semibold">Customer Detail View</h2>
-
+            <Card className="rounded-2xl border border-white/15 bg-black/45 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Customer Detail View</CardTitle>
+              </CardHeader>
+              <CardContent>
                 {selectedCustomer ? (
-                  <div className="mt-3 space-y-2 text-sm">
+                  <div className="space-y-2 text-sm">
                     <p>
                       <span className="font-semibold text-white/85">Name:</span> {selectedCustomer.name}
                     </p>
@@ -384,28 +391,22 @@ export default function CustomerRecordsPage() {
                       <span className="font-semibold text-white/85">Created At:</span>{" "}
                       {new Date(selectedCustomer.createdAt).toLocaleString()}
                     </p>
-                    <button
-                      type="button"
+                    <Button
+                      size="sm"
                       onClick={() => deleteCustomer(selectedCustomer.id)}
-                      className="mt-2 rounded-md bg-rose-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-600"
+                      className="mt-2 bg-rose-700 hover:bg-rose-600 text-white"
                     >
                       Delete This Customer
-                    </button>
+                    </Button>
                   </div>
                 ) : (
-                  <p className="mt-3 text-sm text-white/70">Select a customer to view full info.</p>
+                  <p className="text-sm text-white/70">Select a customer to view full info.</p>
                 )}
-              </article>
-            </section>
-          </div>
-        </div>
-
-        <div className="mx-auto max-w-6xl px-4 pb-8 md:px-8">
-          <Link href="/Display/LandingPage" className="text-sm text-white/80 hover:text-white">
-            Back to Dashboard
-          </Link>
+              </CardContent>
+            </Card>
+          </section>
         </div>
       </div>
-    </>
+    </div>
   );
 }
