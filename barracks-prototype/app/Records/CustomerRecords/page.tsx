@@ -26,6 +26,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Customer = {
   id: string;
@@ -392,16 +393,19 @@ export default function CustomerRecordsPage() {
               className="border-zinc-800 bg-zinc-900/40 pl-9 text-zinc-100 placeholder:text-zinc-600 focus:border-amber-400/30 focus:ring-amber-400/10"
             />
           </div>
-          <select
+          <Select
             value={sortBy}
-            onChange={(event) => setSortBy(event.target.value as typeof sortBy)}
-            className="h-10 rounded-md border border-zinc-800 bg-zinc-900/40 px-3 text-sm text-zinc-300 outline-none focus:border-amber-400/30"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            onValueChange={(value) => setSortBy(value as typeof sortBy)}
           >
-            <option value="name-asc">Name A–Z</option>
-            <option value="name-desc">Name Z–A</option>
-            <option value="recent">Recently Added</option>
-          </select>
+            <SelectTrigger className="w-full sm:w-[200px] border-zinc-800 bg-zinc-900/40 text-zinc-300 focus:border-amber-400/30 focus:ring-amber-400/10">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent className="border-zinc-800 bg-zinc-900 text-zinc-300">
+              <SelectItem value="name-asc" className="focus:bg-zinc-800 focus:text-zinc-100">Name A–Z</SelectItem>
+              <SelectItem value="name-desc" className="focus:bg-zinc-800 focus:text-zinc-100">Name Z–A</SelectItem>
+              <SelectItem value="recent" className="focus:bg-zinc-800 focus:text-zinc-100">Recently Added</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* ─── Records Panel ─── */}
