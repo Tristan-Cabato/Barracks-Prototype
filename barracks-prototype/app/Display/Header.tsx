@@ -43,7 +43,7 @@ export default function Header() {
               className={`gap-2 ${
                 pathname === "/Records/CustomerRecords"
                   ? "!bg-muted/50 dark:!bg-zinc-800/40 !text-foreground hover:!bg-muted/40 dark:hover:!bg-zinc-800/30"
-                  : "hover:bg-muted/40 dark:hover:bg-zinc-800/30"
+                  : "hover:bg-muted/40 dark:hover:bg-zinc-800/30 !text-foreground/80 hover:!text-foreground"
               }`}
             >
               <Users className="h-4 w-4" />
@@ -57,7 +57,7 @@ export default function Header() {
               className={`gap-2 ${
                 pathname === "/Records/StaffRecords"
                   ? "!bg-muted/50 dark:!bg-zinc-800/40 !text-foreground hover:!bg-muted/40 dark:hover:!bg-zinc-800/30"
-                  : "hover:bg-muted/40 dark:hover:bg-zinc-800/30"
+                  : "hover:bg-muted/40 dark:hover:bg-zinc-800/30 !text-foreground/80 hover:!text-foreground"
               }`}
             >
               <UserCheck className="h-4 w-4" />
@@ -75,7 +75,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-9 w-9 hover:bg-muted/40 dark:hover:bg-zinc-800/30 transition-all duration-200"
+              className="h-9 w-9 !text-foreground/80 hover:bg-muted/40 dark:hover:bg-zinc-800/30 hover:!text-foreground transition-all duration-200"
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
