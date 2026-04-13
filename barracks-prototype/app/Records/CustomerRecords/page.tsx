@@ -356,7 +356,9 @@ export default function CustomerRecordsPage() {
                   <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button type="submit" form="create-form">
+                  <Button type="submit" form="create-form"
+                    className="border border-amber-500/20 dark:border-amber-400/20 bg-amber-500/5 dark:bg-amber-400/5 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 dark:hover:bg-amber-400/10 hover:text-amber-700 dark:hover:text-amber-300"
+                  >
                     Add Customer
                   </Button>
                 </DialogFooter>

@@ -414,7 +414,9 @@ export default function StaffRecordsPage() {
                   <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button type="submit" form="create-form">
+                  <Button type="submit" form="create-form"
+                    className="border border-emerald-500/20 dark:border-emerald-400/20 bg-emerald-500/5 dark:bg-emerald-400/5 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 dark:hover:bg-emerald-400/10 hover:text-emerald-700 dark:hover:text-emerald-300"
+                  >
                     Add Staff
                   </Button>
                 </DialogFooter>
