@@ -1,28 +1,43 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import usersData from "@/app/data/users.json";
 
 export default function LoginPage() {
-    // Note: Though the demos show sample passwords, there's no verification process, just put fuckall bro
-
-    // Trinidad Part
-    const searchParams = useSearchParams();
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         setError("");
         setIsSubmitting(true);
 
-        setTimeout(() => {
-            window.location.assign("/Display/LandingPage");
-        }, 500);
+        const user = usersData.find(
+            (u: any) => u.username === username && u.password === password
+        );
+
+        if (!user) {
+            setError("Invalid username or password");
+            setIsSubmitting(false);
+            return;
+        }
+
+        // Save user to localStorage
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify({
+                username: user.username,
+                role: user.role,
+                name: user.name,
+                staffId: user.staffId
+            })
+        );
+
+        // Redirect to landing page
+        window.location.href = "/Display/LandingPage";
     }
 
     return (
@@ -35,8 +50,7 @@ export default function LoginPage() {
                     placeholder="Username"
                     value={username}
                     onChange={(event) => setUsername(event.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2"
-                    autoComplete="username"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-black"
                 />
 
                 <input
@@ -44,30 +58,27 @@ export default function LoginPage() {
                     placeholder="Password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2"
-                    autoComplete="current-password"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-black"
                 />
 
-                {error ? <p className="text-sm text-red-200">{error}</p> : null}
+                {error && <p className="text-sm text-red-200">{error}</p>}
 
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded-lg bg-gray-950 px-4 py-2 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
+                    className="w-full rounded-lg bg-gray-950 px-4 py-2 font-semibold text-white hover:bg-gray-800"
                 >
                     {isSubmitting ? "Signing in..." : "Sign in"}
                 </button>
             </form>
 
-            <p className="w-full rounded-lg bg-gray-950 px-4 py-2 mt-2 flex justify-center font-semibold text-white transition hover:bg-gray-800 disabled:opacity-70">
-                <Link href="/Display/LandingPage">
-                    Proceed without Logging In
-                </Link>
-            </p>
-            <p className="mt-4 text-center text-xs text-gray-200">
-                Demo account: <span className="font-semibold">admin</span> / <span className="font-semibold">barracks123</span>
+            <p className="w-full rounded-lg bg-gray-950 px-4 py-2 mt-2 flex justify-center text-white">
+                <Link href="/Display/LandingPage">Proceed without Logging In</Link>
             </p>
 
+            <p className="mt-4 text-center text-xs text-gray-200">
+                Demo: <b>admin</b> / <b>barracks123</b>
+            </p>
         </div>
     );
 }

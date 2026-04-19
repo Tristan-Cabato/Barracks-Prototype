@@ -1,5 +1,27 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { User, Network, Package, UserRound } from 'lucide-react'
+import Link from 'next/link'
+import usersData from "@/app/data/users.json";
+
+export default function Header() {
+    const pathname = usePathname();
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem("currentUser");
+        if (stored) {
+            const user = JSON.parse(stored);
+            setCurrentUser(user);
+            
+            // Check if user is admin from users.json
+            const userRecord = usersData.find((u: any) => u.username === user.username);
+            setIsAdmin(userRecord?.isAdmin || false);
+        }
+    }, []);
 import { useState, useMemo, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { User, Network, Package, UserRound } from 'lucide-react'
@@ -129,9 +151,32 @@ export default function Header() {
                         Inventory
                     </h2>
                 </Link>
+
+                {/* Admin Panel - only shows for admin users */}
+                {currentUser && isAdmin && (
+                    <h2 className="text-yellow-400 hover:scale-110 hover:font-bold transition-transform cursor-pointer">
+                        Admin Panel
+                    </h2>
+                )}
             </div>
 
             <div className="flex flex-row items-center gap-2">
+                {currentUser ? (
+                    <div className="flex items-center gap-2">
+                        <span className="text-green-400 text-sm">
+                            Welcome, {currentUser.name}
+                        </span>
+                        {isAdmin && (
+                            <span className="rounded-full border border-emerald-300/50 bg-emerald-400/20 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-emerald-200">
+                                Admin
+                            </span>
+                        )}
+                    </div>
+                ) : (
+                    <Link href="/login">
+                        <span className="text-white text-sm mr-2 hover:underline">Login</span>
+                    </Link>
+                )}
                 <SearchFilter
                     searchQuery={searchQuery}
                     onSearchChange={handleSearchChange}
@@ -149,5 +194,5 @@ export default function Header() {
                 <UserRound style={{color: "white"}} />
             </div>
         </header>
-    )
+    );
 }
