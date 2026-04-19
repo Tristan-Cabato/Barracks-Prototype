@@ -25,6 +25,13 @@ export default function LoginPage() {
             return;
         }
 
+        // Block non-admin users
+        if (!user.isAdmin) {
+            setError("Error: Unauthorized - Admin access only");
+            setIsSubmitting(false);
+            return;
+        }
+
         // Save user to localStorage
         localStorage.setItem(
             "currentUser",
@@ -71,10 +78,6 @@ export default function LoginPage() {
                     {isSubmitting ? "Signing in..." : "Sign in"}
                 </button>
             </form>
-
-            <p className="w-full rounded-lg bg-gray-950 px-4 py-2 mt-2 flex justify-center text-white">
-                <Link href="/Display/LandingPage">Proceed without Logging In</Link>
-            </p>
 
             <p className="mt-4 text-center text-xs text-gray-200">
                 Demo: <b>admin</b> / <b>barracks123</b>
