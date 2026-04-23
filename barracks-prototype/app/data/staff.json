@@ -2,7 +2,7 @@
   {
     "id": "staff-2001",
     "name": "Real",
-    "role": "Barber",
+    "role": "barber",
     "email": "realng@email.com",
     "contactNumber": "+63 917 555 0210",
     "monthlySalary": 24000,
@@ -11,7 +11,7 @@
   {
     "id": "staff-2004",
     "name": "Admin",
-    "role": "Admin",
+    "role": "admin",
     "email": "admin.user@email.com",
     "contactNumber": "+63 917 555 0347",
     "monthlySalary": 300676767,

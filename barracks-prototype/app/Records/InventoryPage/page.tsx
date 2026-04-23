@@ -83,7 +83,7 @@ export default function InventoryPage() {
         item.itemName.toLowerCase().includes(normalizedQuery) ||
         item.category.toLowerCase().includes(normalizedQuery) ||
         item.itemID.toLowerCase().includes(normalizedQuery);
-      const matchesCategory = categoryFilter === "all" || item.category === categoryFilter;
+      const matchesCategory = categoryFilter === "all" || item.category.toLowerCase() === categoryFilter.toLowerCase();
       return matchesQuery && matchesCategory;
     });
 
@@ -325,14 +325,20 @@ export default function InventoryPage() {
 
                   <label className="block text-sm">
                     Category
-                    <input
-                      type="text"
+                    <select
                       value={formData.category}
                       onChange={(event) =>
                         setFormData((previous) => ({ ...previous, category: event.target.value }))
                       }
                       className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-pink-300 transition focus:ring-2"
-                    />
+                    >
+                      <option value="" disabled>Select a category</option>
+                      <option value="Hair Products">Hair Products</option>
+                      <option value="Tools">Tools</option>
+                      <option value="Supplies">Supplies</option>
+                      <option value="Equipment">Equipment</option>
+                      <option value="Misc">Misc</option>
+                    </select>
                   </label>
 
                   <label className="block text-sm">

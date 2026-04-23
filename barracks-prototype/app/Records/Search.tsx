@@ -30,14 +30,12 @@ const inventorySortOptions = [
   { value: "recent", label: "Sort: Recently Updated" },
 ];
 
-function getUniqueCategories(inventoryItems: InventoryItem[]): string[] {
-  const categories = new Set(inventoryItems.map(item => item.category));
-  return ["all", ...Array.from(categories).sort()];
+function getUniqueCategories(_inventoryItems: InventoryItem[]): string[] {
+  return ["all", "Hair Products", "Tools", "Supplies", "Equipment", "Misc"];
 }
 
-function getUniqueRoles(staffItems: StaffMember[]): string[] {
-  const roles = new Set(staffItems.map(staff => staff.role));
-  return ["all", ...Array.from(roles).sort()];
+function getUniqueRoles(_staffItems: StaffMember[]): string[] {
+  return ["all", "admin", "manager", "barber", "cashier"];
 }
 
 type SearchFilterProps = {
