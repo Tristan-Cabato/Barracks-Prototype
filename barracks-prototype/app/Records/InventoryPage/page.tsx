@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import Header from "@/app/Display/Header";
 import { useInventoryStorage } from "@/app/Records/DataPersistence/Storage";
 import {
   type InventoryItem,
@@ -218,8 +217,7 @@ export default function InventoryPage() {
   };
 
   return (
-    <>
-      <Header />
+    <>   
       <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(190,24,93,0.35),_transparent_55%),linear-gradient(120deg,_#111827_0%,_#1f2937_40%,_#0f172a_100%)]">
         <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
           <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">

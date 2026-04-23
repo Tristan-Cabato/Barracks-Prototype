@@ -3,6 +3,7 @@
 import { User, Network, Package, TrendingUp } from 'lucide-react';
 import LandingPage from "./LandingPageClient";
 import { getAllCustomers, getAllStaff, getAllInventory } from "@/app/lib/records-api";
+import { formatRelativeTime } from "@/app/Records/DataPersistence/Storage";
 
 export default function DashboardWrapper() {
     const customers = getAllCustomers();
@@ -20,7 +21,7 @@ export default function DashboardWrapper() {
             total: customerCount,
             recentLabel: "Recent:",
             recent: customers[0] ? `#${customers[0].id.slice(-4)} - ${customers[0].name}` : "No records",
-            updated: "Updated: Just now",
+            updated: formatRelativeTime(customers[0]?.createdAt || new Date().toISOString()),
             href: "/Records/CustomerRecords",
             icon: <User size={20} />,
             color: "yellow"
@@ -31,7 +32,7 @@ export default function DashboardWrapper() {
             total: staffCount,
             recentLabel: "Recent:",
             recent: staff[0] ? `#${staff[0].id.slice(-4)} - ${staff[0].name} (${staff[0].role})` : "No records",
-            updated: "Updated: Just now",
+            updated: formatRelativeTime(staff[0]?.createdAt || new Date().toISOString()),
             href: "/Records/StaffRecords",
             icon: <Network size={20} />,
             color: "green"
@@ -42,7 +43,7 @@ export default function DashboardWrapper() {
             total: inventoryCount,
             recentLabel: "Recent:",
             recent: inventoryItems[0] ? `#${inventoryItems[0].itemID.slice(-4)} - ${inventoryItems[0].itemName}` : "No records",
-            updated: "Updated: Just now",
+            updated: formatRelativeTime(inventoryItems[0]?.updatedAt || new Date().toISOString()),
             href: "/Records/InventoryPage",
             icon: <Package size={20} />,
             color: "pink"

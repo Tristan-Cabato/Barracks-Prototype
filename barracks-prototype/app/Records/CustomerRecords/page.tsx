@@ -1,8 +1,6 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import Header from "@/app/Display/Header";
 import { useCustomerStorage, type Customer } from "@/app/Records/DataPersistence/Storage";
 
 type CustomerForm = {
@@ -158,7 +156,6 @@ export default function CustomerRecordsPage() {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(29,78,216,0.45),_transparent_60%),linear-gradient(135deg,_#111827_0%,_#1f2937_45%,_#0f172a_100%)]">
         <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
           <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">

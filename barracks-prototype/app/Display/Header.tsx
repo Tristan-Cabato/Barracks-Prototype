@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 import { User, Network, Package, UserRound, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import SearchFilter from "@/app/Records/Search";
-import seedInventory from "@/app/data/inventory.json";
-import seedStaff from "@/app/data/staff.json";
+import { InventoryItem, StaffMember, useInventoryStorage, useStaffStorage } from "../Records/DataPersistence/Storage";
 import usersData from "@/app/data/users.json";
 
 const customerSortOptions = [
@@ -29,13 +28,13 @@ const inventorySortOptions = [
   { value: "recent", label: "Sort: Recently Updated" },
 ];
 
-function getUniqueCategories(): string[] {
-  const categories = new Set(seedInventory.map(item => item.category));
+function getUniqueCategories(inventoryItems: InventoryItem[]): string[] {
+  const categories = new Set(inventoryItems.map(item => item.category));
   return ["all", ...Array.from(categories).sort()];
 }
 
-function getUniqueRoles(): string[] {
-  const roles = new Set(seedStaff.map(staff => staff.role));
+function getUniqueRoles(staffItems: StaffMember[]): string[] {
+  const roles = new Set(staffItems.map(staff => staff.role));
   return ["all", ...Array.from(roles).sort()];
 }
 
@@ -44,6 +43,10 @@ export default function Header() {
     const [currentUser, setCurrentUser] = useState<any>(null);
     // Bypassing type checking will break if assumed interface is not followed
     const [isAdminUser, setIsAdminUser] = useState(false);
+
+    // Get data from storage hooks
+    const { inventoryItems } = useInventoryStorage();
+    const { staff } = useStaffStorage();
 
     const [searchQuery, setSearchQuery] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("all");
@@ -68,10 +71,12 @@ export default function Header() {
         setSortBy("name-asc");
     }, [pathname]);
 
-    const isDashboard = pathname === "/Display/LandingPage" || pathname === "/";
+    if (pathname === "/") { return null }
+    const isDashboard = pathname === "/Display/LandingPage";
     const isCustomerRecords = pathname?.startsWith("/Records/CustomerRecords");
     const isStaffRecords = pathname?.startsWith("/Records/StaffRecords");
     const isInventoryPage = pathname?.startsWith("/Records/InventoryPage");
+
 
     const searchConfig = useMemo(() => {
         if (isCustomerRecords) {
@@ -86,7 +91,7 @@ export default function Header() {
             return {
                 placeholder: "Search staff by name",
                 sortOptions: staffSortOptions,
-                categoryOptions: getUniqueRoles(),
+                categoryOptions: getUniqueRoles(staff),
                 categoryLabel: "Role",
             };
         }
@@ -94,7 +99,7 @@ export default function Header() {
             return {
                 placeholder: "Search by item name, category, or ID",
                 sortOptions: inventorySortOptions,
-                categoryOptions: getUniqueCategories(),
+                categoryOptions: getUniqueCategories(inventoryItems),
                 categoryLabel: "Category",
             };
         }
@@ -104,7 +109,7 @@ export default function Header() {
             categoryOptions: [],
             categoryLabel: "Filter",
         };
-    }, [isCustomerRecords, isStaffRecords, isInventoryPage]);
+    }, [isCustomerRecords, isStaffRecords, isInventoryPage, staff, inventoryItems]);
 
     const handleSearchChange = (value: string) => {
         setSearchQuery(value);

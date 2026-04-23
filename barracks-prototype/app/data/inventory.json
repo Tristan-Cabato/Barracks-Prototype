@@ -1,32 +1,12 @@
 [
   {
     "itemID": "item-3001",
-    "itemName": "Hair Pomade",
-    "category": "Styling",
-    "unitPrice": 350,
-    "quantity": 24,
+    "itemName": "Silverwolf 999",
+    "category": "Gacha",
+    "unitPrice": 1600,
+    "quantity": 5,
     "urgencyLevel": "Low",
     "createdAt": "2026-03-12T08:00:00.000Z",
     "updatedAt": "2026-03-12T08:00:00.000Z"
-  },
-  {
-    "itemID": "item-3002",
-    "itemName": "Shaving Cream",
-    "category": "Grooming",
-    "unitPrice": 210,
-    "quantity": 6,
-    "urgencyLevel": "Medium",
-    "createdAt": "2026-03-20T10:10:00.000Z",
-    "updatedAt": "2026-03-20T10:10:00.000Z"
-  },
-  {
-    "itemID": "item-3003",
-    "itemName": "Sterile Razor Blades",
-    "category": "Tools",
-    "unitPrice": 95,
-    "quantity": 3,
-    "urgencyLevel": "High",
-    "createdAt": "2026-04-01T14:35:00.000Z",
-    "updatedAt": "2026-04-01T14:35:00.000Z"
   }
 ]

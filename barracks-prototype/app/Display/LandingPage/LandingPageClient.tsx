@@ -1,5 +1,4 @@
 import Card, { SmallCard } from "../Card";
-import Header from "../Header";
 import { User, Network, Package, TrendingUp } from 'lucide-react';
 
 interface CardData {
@@ -72,7 +71,6 @@ export default function LandingPage({
 }: LandingPageProps) {
     return (
         <>
-            <Header />
             <div className="relative">
                 <img 
                 src="https://avatar.setmore.com/files/img/fnQDGUanIxuY/87d76986-7faa-4cf4-840e-4bcff5ed6256.jpeg?crop=2048;689;0;148" 

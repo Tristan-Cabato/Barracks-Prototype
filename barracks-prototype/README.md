@@ -52,6 +52,8 @@ app/
 
 ## Recent Implementations
 
-- Inventory page now supports frontend-only JSON-seeded CRUD (create, view, edit, delete) with localStorage persistence.
-- Stock notification section for low-quantity and high-urgency items.
-- Minimalist and cleaner concept for record pages.
+(4/23/26)
+- Search Feature now uses localStorage instead of json files
+- Dashboard now properly displays recent dates
+- Moved Header to layout (root) to avoid repeated calls
+- JSON files now contain 1 data at most (+1 for staff and users json [admin]) to emphasize that it's just initial data

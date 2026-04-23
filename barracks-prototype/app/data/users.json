@@ -1,25 +1,9 @@
 [
   {
     "staffId": "staff-2001",
-    "username": "daniel",
+    "username": "real",
     "password": "barracks123",
-    "name": "Daniel Cruz",
-    "role": "Barber",
-    "isAdmin": false
-  },
-  {
-    "staffId": "staff-2002",
-    "username": "mika",
-    "password": "barracks123",
-    "name": "Mika Santos",
-    "role": "Cashier",
-    "isAdmin": false
-  },
-  {
-    "staffId": "staff-2003",
-    "username": "rico",
-    "password": "barracks123",
-    "name": "Rico Alvarez",
+    "name": "Real",
     "role": "Barber",
     "isAdmin": false
   },

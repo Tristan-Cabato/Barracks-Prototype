@@ -1,23 +1,9 @@
 [
   {
     "id": "cust-1001",
-    "name": "Alyssa Rivera",
-    "email": "alyssa.rivera@email.com",
+    "name": "Lil Fake",
+    "email": "lilfake@email.com",
     "contactNumber": "+63 917 555 0111",
     "createdAt": "2026-01-18T10:22:00.000Z"
-  },
-  {
-    "id": "cust-1002",
-    "name": "Marc Tan",
-    "email": "marc.tan@email.com",
-    "contactNumber": "+63 917 555 0142",
-    "createdAt": "2026-02-04T13:45:00.000Z"
-  },
-  {
-    "id": "cust-1003",
-    "name": "Jessa Lim",
-    "email": "jessa.lim@email.com",
-    "contactNumber": "+63 917 555 0188",
-    "createdAt": "2026-03-01T08:10:00.000Z"
   }
 ]

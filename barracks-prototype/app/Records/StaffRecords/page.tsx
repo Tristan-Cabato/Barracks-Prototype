@@ -2,7 +2,6 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import Header from "@/app/Display/Header";
 import { useStaffStorage, type StaffMember } from "@/app/Records/DataPersistence/Storage";
 import usersData from "@/app/data/users.json";
 
@@ -203,7 +202,6 @@ export default function StaffRecordsPage() {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,_rgba(6,95,70,0.5),_transparent_55%),linear-gradient(120deg,_#111827_0%,_#1f2937_35%,_#0f172a_100%)]">
         <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 text-white md:px-8">
           <section className="rounded-2xl border border-white/15 bg-black/45 p-5 backdrop-blur-sm">
