@@ -27,7 +27,7 @@
     "staffId": "staff-2004",
     "username": "admin",
     "password": "barracks123",
-    "name": "Barmin",
+    "name": "Admin",
     "role": "Admin",
     "isAdmin": true
   }

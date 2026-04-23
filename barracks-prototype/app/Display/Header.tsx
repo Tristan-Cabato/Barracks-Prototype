@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { User, Network, Package, UserRound } from 'lucide-react'
+import { User, Network, Package, UserRound, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import SearchFilter from "@/app/Records/Search";
 import seedInventory from "@/app/data/inventory.json";
@@ -42,11 +42,13 @@ function getUniqueRoles(): string[] {
 export default function Header() {
     const pathname = usePathname();
     const [currentUser, setCurrentUser] = useState<any>(null);
+    // Bypassing type checking will break if assumed interface is not followed
     const [isAdminUser, setIsAdminUser] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("all");
     const [sortBy, setSortBy] = useState("name-asc");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
         const stored = localStorage.getItem("currentUser");
@@ -54,8 +56,8 @@ export default function Header() {
             const user = JSON.parse(stored);
             setCurrentUser(user);
             
-            // Check if user is admin from users.json by staffId
             const userRecord = usersData.find((u: any) => u.staffId === user.staffId);
+            // Find a matching staffId regardless of type (not really helping)
             setIsAdminUser(userRecord?.isAdmin || false);
         }
     }, []);
@@ -119,6 +121,14 @@ export default function Header() {
         window.dispatchEvent(new CustomEvent("headerSort", { detail: value }));
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("currentUser");
+        setCurrentUser(null);
+        setIsAdminUser(false);
+        setIsDropdownOpen(false);
+        window.location.href = "/";
+    };
+
     return (
         <header className="flex flex-row justify-between items-center p-4 bg-gray-800 sticky top-0 z-10">
             <div className="flex flex-row items-center gap-8">
@@ -163,14 +173,31 @@ export default function Header() {
                 />
                 <div className="flex items-center gap-3">
                     {currentUser ? (
-                        <div className="flex items-center gap-2">
-                            <UserRound size={18} style={{color: "#10b981"}} />
-                            <span className="text-green-400 text-sm">
-                                {currentUser.name}
-                            </span>
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                            >
+                                <UserRound size={18} style={{color: "#10b981"}} />
+                                <span className="text-green-400 text-sm">
+                                    {currentUser.name}
+                                </span>
+                                <ChevronDown size={14} style={{color: "#10b981"}} />
+                            </button>
+                            
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 top-full mt-1 bg-gray-800 border border-gray-500 rounded-md shadow-lg z-50">
+                                    <button
+                                        onClick={handleLogout}
+                                        className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     ) : (
-                        <Link href="/Display/LoginPage">
+                        <Link href="/">
                             <span className="text-white text-sm hover:underline">Login</span>
                         </Link>
                     )}

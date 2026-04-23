@@ -57,7 +57,7 @@ export default function LoginPage() {
                     placeholder="Username"
                     value={username}
                     onChange={(event) => setUsername(event.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-black"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-white"
                 />
 
                 <input
@@ -65,7 +65,7 @@ export default function LoginPage() {
                     placeholder="Password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-black"
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-white"
                 />
 
                 {error && <p className="text-sm text-red-200">{error}</p>}
