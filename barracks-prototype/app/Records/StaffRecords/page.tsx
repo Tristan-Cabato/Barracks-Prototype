@@ -302,13 +302,13 @@ export default function StaffRecordsPage() {
                       onChange={(event) =>
                         setFormData((previous) => ({ ...previous, role: event.target.value }))
                       }
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
+                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2 cursor-pointer appearance-none"
                     >
-                      <option value="" disabled>Select a role</option>
-                      <option value="admin">Admin</option>
-                      <option value="manager">Manager</option>
-                      <option value="barber">Barber</option>
-                      <option value="cashier">Cashier</option>
+                      <option className="bg-[#111827]/90" value="" disabled>Select a role</option>
+                      <option className="bg-[#111827]/90" value="admin">Admin</option>
+                      <option className="bg-[#111827]/90" value="manager">Manager</option>
+                      <option className="bg-[#111827]/90" value="barber">Barber</option>
+                      <option className="bg-[#111827]/90" value="cashier">Cashier</option>
                     </select>
                   </label>
 
