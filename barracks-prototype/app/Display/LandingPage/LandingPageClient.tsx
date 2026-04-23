@@ -25,7 +25,7 @@ interface LandingPageProps {
     smallCardsData?: SmallCardsData[];
 }
 
-export default function LandingPage({
+export default function LandingPage({ // Gets overwritten by wrapper
     cardsData = [
         { /* Customer */
             title: "Customer Records",

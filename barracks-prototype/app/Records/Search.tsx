@@ -1,11 +1,44 @@
 "use client";
 
+import { useState, useMemo, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Search, Filter, ArrowUpDown } from "lucide-react";
+import { InventoryItem, StaffMember, useInventoryStorage, useStaffStorage } from "./DataPersistence/Storage";
 
 type SortOption = {
   value: string;
   label: string;
 };
+
+const customerSortOptions = [
+  { value: "name-asc", label: "Sort: Name A-Z" },
+  { value: "name-desc", label: "Sort: Name Z-A" },
+  { value: "recent", label: "Sort: Recently Added" },
+];
+
+const staffSortOptions = [
+  { value: "name-asc", label: "Sort: Name A-Z" },
+  { value: "salary-high", label: "Sort: Salary High-Low" },
+  { value: "salary-low", label: "Sort: Salary Low-High" },
+];
+
+const inventorySortOptions = [
+  { value: "name-asc", label: "Sort: Name A-Z" },
+  { value: "quantity-low", label: "Sort: Quantity Low-High" },
+  { value: "quantity-high", label: "Sort: Quantity High-Low" },
+  { value: "value-high", label: "Sort: Value High-Low" },
+  { value: "recent", label: "Sort: Recently Updated" },
+];
+
+function getUniqueCategories(inventoryItems: InventoryItem[]): string[] {
+  const categories = new Set(inventoryItems.map(item => item.category));
+  return ["all", ...Array.from(categories).sort()];
+}
+
+function getUniqueRoles(staffItems: StaffMember[]): string[] {
+  const roles = new Set(staffItems.map(staff => staff.role));
+  return ["all", ...Array.from(roles).sort()];
+}
 
 type SearchFilterProps = {
   searchQuery: string;
@@ -22,7 +55,98 @@ type SearchFilterProps = {
   disabledMessage?: string;
 };
 
-export default function SearchFilter({
+export default function SearchContainer() {
+  const pathname = usePathname();
+  
+  // Get data from storage hooks
+  const { inventoryItems } = useInventoryStorage();
+  const { staff } = useStaffStorage();
+  
+  // Search state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("name-asc");
+
+  // Reset search when pathname changes
+  useEffect(() => {
+    setSearchQuery("");
+    setCategoryFilter("all");
+    setSortBy("name-asc");
+  }, [pathname]);
+
+  // Determine current page type
+  const isDashboard = pathname === "/Display/LandingPage";
+  const isCustomerRecords = pathname?.startsWith("/Records/CustomerRecords");
+  const isStaffRecords = pathname?.startsWith("/Records/StaffRecords");
+  const isInventoryPage = pathname?.startsWith("/Records/InventoryPage");
+
+  const searchConfig = useMemo(() => {
+    if (isCustomerRecords) {
+      return {
+        placeholder: "Search customers by name",
+        sortOptions: customerSortOptions,
+        categoryOptions: [],
+        categoryLabel: "Filter",
+      };
+    }
+    if (isStaffRecords) {
+      return {
+        placeholder: "Search staff by name",
+        sortOptions: staffSortOptions,
+        categoryOptions: getUniqueRoles(staff),
+        categoryLabel: "Role",
+      };
+    }
+    if (isInventoryPage) {
+      return {
+        placeholder: "Search by item name, category, or ID",
+        sortOptions: inventorySortOptions,
+        categoryOptions: getUniqueCategories(inventoryItems),
+        categoryLabel: "Category",
+      };
+    }
+    return {
+      placeholder: "Search",
+      sortOptions: [{ value: "name-asc", label: "Sort: A-Z" }],
+      categoryOptions: [],
+      categoryLabel: "Filter",
+    };
+  }, [isCustomerRecords, isStaffRecords, isInventoryPage, staff, inventoryItems]);
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    window.dispatchEvent(new CustomEvent("headerSearch", { detail: value }));
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setCategoryFilter(value);
+    window.dispatchEvent(new CustomEvent("headerCategoryFilter", { detail: value }));
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    window.dispatchEvent(new CustomEvent("headerSort", { detail: value }));
+  };
+
+  return (
+    <SearchFilter
+      searchQuery={searchQuery}
+      onSearchChange={handleSearchChange}
+      searchPlaceholder={searchConfig.placeholder}
+      categoryFilter={categoryFilter}
+      onCategoryChange={searchConfig.categoryOptions.length > 0 ? handleCategoryChange : undefined}
+      categoryOptions={searchConfig.categoryOptions}
+      categoryLabel={searchConfig.categoryLabel}
+      sortBy={sortBy}
+      onSortChange={handleSortChange}
+      sortOptions={searchConfig.sortOptions}
+      disabled={isDashboard}
+      disabledMessage="Nothing to search"
+    />
+  );
+}
+
+function SearchFilter({
   searchQuery,
   onSearchChange,
   searchPlaceholder = "Search...",
