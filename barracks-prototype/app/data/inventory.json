@@ -2,11 +2,191 @@
   {
     "itemID": "item-3001",
     "itemName": "Silverwolf 999",
-    "category": "Gacha",
+    "category": "Misc",
     "unitPrice": 1600,
     "quantity": 5,
     "urgencyLevel": "Low",
     "createdAt": "2026-03-12T08:00:00.000Z",
     "updatedAt": "2026-03-12T08:00:00.000Z"
+  },
+  {
+    "itemID": "item-3002",
+    "itemName": "Matte Pomade",
+    "category": "Hair Products",
+    "unitPrice": 350,
+    "quantity": 24,
+    "urgencyLevel": "Medium",
+    "createdAt": "2026-01-15T10:30:00.000Z",
+    "updatedAt": "2026-04-10T14:20:00.000Z"
+  },
+  {
+    "itemID": "item-3003",
+    "itemName": "Clay Pomade",
+    "category": "Hair Products",
+    "unitPrice": 400,
+    "quantity": 18,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-01-15T10:32:00.000Z",
+    "updatedAt": "2026-04-08T09:15:00.000Z"
+  },
+  {
+    "itemID": "item-3004",
+    "itemName": "Hair Tonic",
+    "category": "Hair Products",
+    "unitPrice": 280,
+    "quantity": 3,
+    "urgencyLevel": "High",
+    "createdAt": "2026-02-01T08:00:00.000Z",
+    "updatedAt": "2026-04-20T11:00:00.000Z"
+  },
+  {
+    "itemID": "item-3005",
+    "itemName": "Beard Oil",
+    "category": "Hair Products",
+    "unitPrice": 450,
+    "quantity": 12,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-02-10T13:45:00.000Z",
+    "updatedAt": "2026-03-25T16:30:00.000Z"
+  },
+  {
+    "itemID": "item-3006",
+    "itemName": "Wahl Professional Clipper",
+    "category": "Tools",
+    "unitPrice": 4200,
+    "quantity": 4,
+    "urgencyLevel": "Medium",
+    "createdAt": "2026-01-05T09:00:00.000Z",
+    "updatedAt": "2026-04-15T10:00:00.000Z"
+  },
+  {
+    "itemID": "item-3007",
+    "itemName": "Straight Razor",
+    "category": "Tools",
+    "unitPrice": 850,
+    "quantity": 8,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-01-08T11:20:00.000Z",
+    "updatedAt": "2026-03-30T14:00:00.000Z"
+  },
+  {
+    "itemID": "item-3008",
+    "itemName": "Thinning Shears",
+    "category": "Tools",
+    "unitPrice": 1200,
+    "quantity": 2,
+    "urgencyLevel": "High",
+    "createdAt": "2026-01-20T10:00:00.000Z",
+    "updatedAt": "2026-04-18T09:45:00.000Z"
+  },
+  {
+    "itemID": "item-3009",
+    "itemName": "Neck Duster Brush",
+    "category": "Tools",
+    "unitPrice": 180,
+    "quantity": 15,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-02-05T08:30:00.000Z",
+    "updatedAt": "2026-04-05T11:20:00.000Z"
+  },
+  {
+    "itemID": "item-3010",
+    "itemName": "Barber Cape",
+    "category": "Supplies",
+    "unitPrice": 450,
+    "quantity": 20,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-01-10T09:15:00.000Z",
+    "updatedAt": "2026-03-28T13:00:00.000Z"
+  },
+  {
+    "itemID": "item-3011",
+    "itemName": "Neck Strips",
+    "category": "Supplies",
+    "unitPrice": 120,
+    "quantity": 4,
+    "urgencyLevel": "Medium",
+    "createdAt": "2026-01-12T10:00:00.000Z",
+    "updatedAt": "2026-04-22T08:30:00.000Z"
+  },
+  {
+    "itemID": "item-3012",
+    "itemName": "Disinfectant Spray",
+    "category": "Supplies",
+    "unitPrice": 320,
+    "quantity": 6,
+    "urgencyLevel": "Medium",
+    "createdAt": "2026-01-25T11:30:00.000Z",
+    "updatedAt": "2026-04-12T15:00:00.000Z"
+  },
+  {
+    "itemID": "item-3013",
+    "itemName": "Disposable Razors",
+    "category": "Supplies",
+    "unitPrice": 80,
+    "quantity": 2,
+    "urgencyLevel": "High",
+    "createdAt": "2026-02-01T09:00:00.000Z",
+    "updatedAt": "2026-04-25T10:15:00.000Z"
+  },
+  {
+    "itemID": "item-3014",
+    "itemName": "Barber Chair",
+    "category": "Equipment",
+    "unitPrice": 28000,
+    "quantity": 3,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-01-01T08:00:00.000Z",
+    "updatedAt": "2026-03-15T09:00:00.000Z"
+  },
+  {
+    "itemID": "item-3015",
+    "itemName": "Hair Dryer Stand",
+    "category": "Equipment",
+    "unitPrice": 3500,
+    "quantity": 2,
+    "urgencyLevel": "Medium",
+    "createdAt": "2026-01-18T10:00:00.000Z",
+    "updatedAt": "2026-04-08T11:30:00.000Z"
+  },
+  {
+    "itemID": "item-3016",
+    "itemName": "LED Mirror",
+    "category": "Equipment",
+    "unitPrice": 7500,
+    "quantity": 1,
+    "urgencyLevel": "High",
+    "createdAt": "2026-02-10T13:00:00.000Z",
+    "updatedAt": "2026-04-20T14:00:00.000Z"
+  },
+  {
+    "itemID": "item-3017",
+    "itemName": "Hot Towel Warmer",
+    "category": "Equipment",
+    "unitPrice": 4200,
+    "quantity": 1,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-02-15T09:30:00.000Z",
+    "updatedAt": "2026-03-20T10:00:00.000Z"
+  },
+  {
+    "itemID": "item-3018",
+    "itemName": "Gift Cards",
+    "category": "Misc",
+    "unitPrice": 500,
+    "quantity": 50,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-03-01T08:00:00.000Z",
+    "updatedAt": "2026-04-18T16:00:00.000Z"
+  },
+  {
+    "itemID": "item-3019",
+    "itemName": "Barracks T-Shirt",
+    "category": "Misc",
+    "unitPrice": 800,
+    "quantity": 10,
+    "urgencyLevel": "Low",
+    "createdAt": "2026-03-05T10:00:00.000Z",
+    "updatedAt": "2026-04-10T09:30:00.000Z"
   }
 ]
