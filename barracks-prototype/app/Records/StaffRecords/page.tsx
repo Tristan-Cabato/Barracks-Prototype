@@ -66,7 +66,7 @@ export default function StaffRecordsPage() {
 
     const visible = staff.filter((member) => {
       const matchesName = member.name.toLowerCase().includes(normalizedQuery);
-      const matchesRole = roleFilter === "all" || member.role.toLowerCase() === roleFilter.toLowerCase();
+      const matchesRole = roleFilter === "all" || member.role === roleFilter;
       return matchesName && matchesRole;
     });
 
@@ -297,19 +297,15 @@ export default function StaffRecordsPage() {
 
                   <label className="block text-sm">
                     Role
-                    <select
+                    <input
+                      type="text"
                       value={formData.role}
                       onChange={(event) =>
                         setFormData((previous) => ({ ...previous, role: event.target.value }))
                       }
-                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2 cursor-pointer appearance-none"
-                    >
-                      <option className="bg-[#111827]/90" value="" disabled>Select a role</option>
-                      <option className="bg-[#111827]/90" value="admin">Admin</option>
-                      <option className="bg-[#111827]/90" value="manager">Manager</option>
-                      <option className="bg-[#111827]/90" value="barber">Barber</option>
-                      <option className="bg-[#111827]/90" value="cashier">Cashier</option>
-                    </select>
+                      placeholder="e.g., Barber, Cashier"
+                      className="mt-1 w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 outline-none ring-emerald-300 transition focus:ring-2"
+                    />
                   </label>
 
                   <label className="block text-sm">

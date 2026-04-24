@@ -36,29 +36,41 @@ const isValidCustomer = (value: unknown): value is Customer => {
   );
 };
 
+const getInitialCustomers = (storageKey: string): Customer[] => {
+  if (typeof window === "undefined") {
+    return (seedCustomers as Customer[]).map((customer) => ({ ...customer }));
+  }
+
+  const storedRecords = window.localStorage.getItem(storageKey);
+
+  if (!storedRecords) {
+    return (seedCustomers as Customer[]).map((customer) => ({ ...customer }));
+  }
+
+  try {
+    const parsed = JSON.parse(storedRecords) as unknown;
+
+    if (Array.isArray(parsed) && parsed.every(isValidCustomer)) {
+      return parsed;
+    }
+
+    const fallback = (seedCustomers as Customer[]).map((customer) => ({ ...customer }));
+    window.localStorage.setItem(storageKey, JSON.stringify(fallback));
+    return fallback;
+  } catch {
+    const fallback = (seedCustomers as Customer[]).map((customer) => ({ ...customer }));
+    window.localStorage.setItem(storageKey, JSON.stringify(fallback));
+    return fallback;
+  }
+};
+
 export const useCustomerStorage = () => {
   const STORAGE_KEY = "barracks.customers.records";
-  // Initialize with seed data to avoid SSR hydration mismatch
   const [customers, setCustomers] = useState<Customer[]>(() =>
-    (seedCustomers as Customer[]).map((customer) => ({ ...customer }))
+    getInitialCustomers(STORAGE_KEY),
   );
 
-  // Load from localStorage after mount (client-only)
-  useEffect(() => {
-    const storedRecords = window.localStorage.getItem(STORAGE_KEY);
-    if (storedRecords) {
-      try {
-        const parsed = JSON.parse(storedRecords) as unknown;
-        if (Array.isArray(parsed) && parsed.every(isValidCustomer)) {
-          setCustomers(parsed);
-        }
-      } catch {
-        // ignore, keep seed data
-      }
-    }
-  }, []);
-
-  // autosave to localstorage whenever customer change
+  // autosave to localstorage wenever customer change
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(customers));
   }, [customers]);
@@ -126,7 +138,7 @@ const defaultAdminStaff: StaffMember[] = [
   {
     id: "admin-0001",
     name: "System Admin",
-    role: "admin",
+    role: "Admin",
     email: "admin@barracks.local",
     contactNumber: "N/A",
     monthlySalary: 0,
@@ -165,29 +177,45 @@ const isValidStaff = (value: unknown): value is StaffMember => {
   );
 };
 
+const getInitialStaff = (storageKey: string): StaffMember[] => {
+  if (typeof window === "undefined") {
+    const seededStaff = (seedStaff as StaffMember[]).map((staff) => ({ ...staff }));
+    return ensureAdminInStaff(seededStaff);
+  }
+
+  const storedRecords = window.localStorage.getItem(storageKey);
+
+  if (!storedRecords) {
+    const seededStaff = (seedStaff as StaffMember[]).map((staff) => ({ ...staff }));
+    return ensureAdminInStaff(seededStaff);
+  }
+
+  try {
+    const parsed = JSON.parse(storedRecords) as unknown;
+
+    if (Array.isArray(parsed) && parsed.every(isValidStaff)) {
+      return ensureAdminInStaff(parsed);
+    }
+
+    const fallback = ensureAdminInStaff(
+      (seedStaff as StaffMember[]).map((staff) => ({ ...staff })),
+    );
+    window.localStorage.setItem(storageKey, JSON.stringify(fallback));
+    return fallback;
+  } catch {
+    const fallback = ensureAdminInStaff(
+      (seedStaff as StaffMember[]).map((staff) => ({ ...staff })),
+    );
+    window.localStorage.setItem(storageKey, JSON.stringify(fallback));
+    return fallback;
+  }
+};
+
 export const useStaffStorage = () => {
   const STORAGE_KEY = "barracks.staff.records";
-  // Initialize with seed data to avoid SSR hydration mismatch
-  const [staff, setStaff] = useState<StaffMember[]>(() =>
-    ensureAdminInStaff((seedStaff as StaffMember[]).map((s) => ({ ...s })))
-  );
+  const [staff, setStaff] = useState<StaffMember[]>(() => getInitialStaff(STORAGE_KEY));
 
-  // Load from localStorage after mount (client-only)
-  useEffect(() => {
-    const storedRecords = window.localStorage.getItem(STORAGE_KEY);
-    if (storedRecords) {
-      try {
-        const parsed = JSON.parse(storedRecords) as unknown;
-        if (Array.isArray(parsed) && parsed.every(isValidStaff)) {
-          setStaff(ensureAdminInStaff(parsed));
-        }
-      } catch {
-        // ignore, keep seed data
-      }
-    }
-  }, []);
-
-  // autosave to localstorage whenever staff change
+  // autosave to localstorage wenever staff change
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(staff));
   }, [staff]);
@@ -255,27 +283,39 @@ export const useStaffStorage = () => {
 
 export type { InventoryItem };
 
+const getInitialInventory = (storageKey: string): InventoryItem[] => {
+  if (typeof window === "undefined") {
+    return (seedInventory as InventoryItem[]).map((item) => ({ ...item }));
+  }
+
+  const storedRecords = window.localStorage.getItem(storageKey);
+
+  if (!storedRecords) {
+    return (seedInventory as InventoryItem[]).map((item) => ({ ...item }));
+  }
+
+  try {
+    const parsed = JSON.parse(storedRecords) as unknown;
+
+    if (Array.isArray(parsed) && parsed.every(isInventoryItem)) {
+      return parsed;
+    }
+
+    const fallback = (seedInventory as InventoryItem[]).map((item) => ({ ...item }));
+    window.localStorage.setItem(storageKey, JSON.stringify(fallback));
+    return fallback;
+  } catch {
+    const fallback = (seedInventory as InventoryItem[]).map((item) => ({ ...item }));
+    window.localStorage.setItem(storageKey, JSON.stringify(fallback));
+    return fallback;
+  }
+};
+
 export const useInventoryStorage = () => {
   const STORAGE_KEY = "barracks.inventory.records";
-  // Initialize with seed data to avoid SSR hydration mismatch
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>(() =>
-    (seedInventory as InventoryItem[]).map((item) => ({ ...item }))
+    getInitialInventory(STORAGE_KEY),
   );
-
-  // Load from localStorage after mount (client-only)
-  useEffect(() => {
-    const storedRecords = window.localStorage.getItem(STORAGE_KEY);
-    if (storedRecords) {
-      try {
-        const parsed = JSON.parse(storedRecords) as unknown;
-        if (Array.isArray(parsed) && parsed.every(isInventoryItem)) {
-          setInventoryItems(parsed);
-        }
-      } catch {
-        // ignore, keep seed data
-      }
-    }
-  }, []);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(inventoryItems));
